@@ -1,0 +1,36 @@
+version: '2'
+services:
+  divine:
+    image: togetheragency/together-data-dashboard:latest
+    build:
+      context: .
+      args:
+        BUILD_ID: development
+    ports:
+      - "8800:80"
+    volumes:
+      - ".:/var/www"
+      - "./build/disable-opcache.ini:/usr/local/etc/php/conf.d/disable-opcache.ini"
+    tmpfs:
+      - "/tmp"
+      - "/run/lock/apache2"
+      - "/run/apache2"
+      - "/run"
+      - "/var/www/var/log:uid=33,rw,mode=777"
+      - "/var/www/var/cache/dev:uid=33,rw,mode=777"
+    restart: always
+    read_only: true
+    container_name: together-data-dashboard
+    network_mode: "bridge"
+    logging:
+      driver: none
+    environment:
+      ENVIRONMENT: "dev"
+#      DB_DRIVER: "mysql"
+#      DB_SERVER: "db1-cluster-1.cluster-cbydemspsfwq.eu-west-1.rds.amazonaws.com"
+#      DB_USER: "divine"
+#      DB_PASSWORD: "rNHXnvGaDd2C5YbH"
+#      DB_DATABASE: "divine_staging"
+#      DB_SCHEMA: "public"
+#      DB_TABLE_PREFIX: ""
+#      DB_PORT: ""

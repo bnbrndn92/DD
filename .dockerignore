@@ -1,0 +1,6 @@
+/.git/
+/.idea/
+/vendor/
+/bitbucket-pipelines.yml
+/deployment.yml
+/docker-compose.yml

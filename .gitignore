@@ -2,7 +2,7 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/public/bundles/
+/web/bundles/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
