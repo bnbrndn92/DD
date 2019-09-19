@@ -1,0 +1,19 @@
+/*
+ * ------------------------------------------------
+ *
+ * Header Stylesheet
+ * Stylesheet for the header partial located:
+ * /templates/partials/header.html.twig
+ *
+ * ------------------------------------------------
+ */
+
+@import '../basic/variables.scss';
+
+header {
+  .navbar-brand {
+    img {
+      height: 40px;
+    }
+  }
+}

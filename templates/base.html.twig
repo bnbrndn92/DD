@@ -1,1 +1,41 @@
-Here
+<!DOCTYPE html>
+<!--[if lte IE 6]><html class="preIE7 preIE8 preIE9" lang="en"><![endif]-->
+<!--[if IE 7]><html class="preIE8 preIE9" lang="en"><![endif]-->
+<!--[if IE 8]><html class="preIE9" lang="en"><![endif]-->
+<!--[if gte IE 9]><!--><html lang="en"><!--<![endif]-->
+<head>
+    <title>{% if pageTitle is defined and pageTitle %}{{ pageTitle }}{% else %}Data Dashboard{% endif %}</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="author" content="Together Agency">
+    <meta name="description" content="{% if pageDescription is defined and pageDescription %}{{ pageDescription }}{% endif %}">
+    <meta name="keywords" content="{% if pageKeywords is defined and pageKeywords %}{{ pageKeywords }}{% endif %}">
+
+    <link rel="stylesheet" href="/css/style.min.css">
+</head>
+<body {% if bodyClass is defined and bodyClass %}class="{{ bodyClass }}"{% endif %}>
+{% if headerDisable is not defined or headerDisable != true %}
+    {% include '/partials/header.html.twig' %}
+{% endif %}
+
+<div class="container-fluid">
+    <div class="row">
+        {% if sidebarDisable is not defined or sidebarDisable != true %}
+            {% include '/partials/sidebar.html.twig' %}
+        {% endif %}
+        <div class="col">
+            {# Main Body Content Here #}
+        </div>
+    </div>
+</div>
+
+{% if footerDisable is not defined or footerDisable != true %}
+    {% include '/partials/footer.html.twig' %}
+{% endif %}
+
+<script src="/js/app.min.js" type="text/javascript"></script>
+</body>
+</html>

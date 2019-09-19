@@ -1,0 +1,19 @@
+/*
+ * ------------------------------------------------
+ *
+ * Primary Stylesheet
+ * Imports all required SCSS in the correct order.
+ * Bootstrap is imported first by Gulp.
+ *
+ * ------------------------------------------------
+ */
+
+// Import Basic Stylesheets
+@import 'basic/variables.scss';
+
+// Import Component Stylesheets
+
+// Import Partial Stylesheets
+@import 'partials/header.scss';
+
+// Import Page Override Stylesheets
