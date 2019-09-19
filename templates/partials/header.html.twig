@@ -1,6 +1,6 @@
-<header class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand" href="{{ path('home') }}">
-        <img src="/images/together_logo_light.png" alt="Together">
+<header class="navbar navbar-expand-md navbar-dark bg-dark p-0">
+    <a class="navbar-brand col-2 mr-0" href="{{ path('home') }}">
+        <img src="/images/together_logo_light.png" alt="Together" class="mx-auto d-block">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#header-nav" aria-controls="header-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,9 +8,9 @@
 
     <div class="collapse navbar-collapse" id="header-nav">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ path('home') }}">Home</a>
-            </li>
+            {#<li class="nav-item active">#}
+                {#<a class="nav-link" href="{{ path('home') }}">Home</a>#}
+            {#</li>#}
             {#<li class="nav-item">#}
                 {#<a class="nav-link" href="#">Link</a>#}
             {#</li>#}

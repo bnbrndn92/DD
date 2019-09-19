@@ -1,0 +1,15 @@
+/*
+ * ------------------------------------------------
+ *
+ * Header Stylesheet
+ * Stylesheet for the header partial located:
+ * /templates/partials/header.html.twig
+ *
+ * ------------------------------------------------
+ */
+
+@import '../basic/variables.scss';
+
+nav#main-sidebar {
+  min-height: calc(100vh - 50px);
+}

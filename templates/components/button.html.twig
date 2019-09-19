@@ -1,0 +1,3 @@
+{% if params is defined and params %}
+    <a href="{{ params.buttonLink | '/' }}" role="button" class="btn {% if params.buttonClass is defined and params.buttonClass %}{{ params.buttonClass }}{% endif %}">{% if params.buttonLabel is defined and params.buttonLabel %}{{ params.buttonLabel }}{% endif %}</a>
+{% endif %}
