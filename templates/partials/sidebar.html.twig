@@ -2,16 +2,16 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item text-center">
-                <a class="nav-link font-weight-bold text-uppercase text-dark" href="{{ path('home') }}">Dashboard</a>
+                <a class="nav-link font-weight-bold text-uppercase {% if '/' ~ app.request.attributes.get('_route') == path('dashboard') %}text-primary{% else %}text-dark{% endif %}" href="{{ path('dashboard') }}">Dashboard</a>
             </li>
             <li class="nav-item text-center">
-                <a class="nav-link font-weight-bold text-uppercase text-dark" href="{{ path('home') }}">Bandwidth</a>
+                <a class="nav-link font-weight-bold text-uppercase {% if '/' ~ app.request.attributes.get('_route') == path('bandwidth') %}text-primary{% else %}text-dark{% endif %}" href="{{ path('bandwidth') }}">Bandwidth</a>
             </li>
             <li class="nav-item text-center">
-                <a class="nav-link font-weight-bold text-uppercase text-dark" href="{{ path('home') }}">DB IO</a>
+                <a class="nav-link font-weight-bold text-uppercase {% if '/' ~ app.request.attributes.get('_route') == path('dbio') %}text-primary{% else %}text-dark{% endif %}" href="{{ path('dbio') }}">DB IO</a>
             </li>
             <li class="nav-item text-center">
-                <a class="nav-link font-weight-bold text-uppercase text-dark" href="{{ path('home') }}">Services</a>
+                <a class="nav-link font-weight-bold text-uppercase {% if '/' ~ app.request.attributes.get('_route') == path('services') %}text-primary{% else %}text-dark{% endif %}" href="{{ path('services') }}">Services</a>
             </li>
         </ul>
     </div>

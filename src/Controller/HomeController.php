@@ -11,6 +11,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return $this->render('base.html.twig');
+        return $this->redirectToRoute('dashboard');
     }
 }
