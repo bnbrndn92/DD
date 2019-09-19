@@ -7,10 +7,19 @@
     </button>
 
     <div class="collapse navbar-collapse" id="header-nav">
-        <ul class="navbar-nav mr-auto">
-            {#<li class="nav-item active">#}
-                {#<a class="nav-link" href="{{ path('home') }}">Home</a>#}
-            {#</li>#}
+        <ul class="navbar-nav mr-auto d-md-none pt-3 pb-3">
+            <li class="nav-item text-center">
+                <a class="nav-link font-weight-bold text-uppercase {% if '/' ~ app.request.attributes.get('_route') == path('dashboard') %}text-primary{% else %}text-light{% endif %}" href="{{ path('dashboard') }}">Dashboard</a>
+            </li>
+            <li class="nav-item text-center">
+                <a class="nav-link font-weight-bold text-uppercase {% if '/' ~ app.request.attributes.get('_route') == path('bandwidth') %}text-primary{% else %}text-light{% endif %}" href="{{ path('bandwidth') }}">Bandwidth</a>
+            </li>
+            <li class="nav-item text-center">
+                <a class="nav-link font-weight-bold text-uppercase {% if '/' ~ app.request.attributes.get('_route') == path('dbio') %}text-primary{% else %}text-light{% endif %}" href="{{ path('dbio') }}">DB IO</a>
+            </li>
+            <li class="nav-item text-center">
+                <a class="nav-link font-weight-bold text-uppercase {% if '/' ~ app.request.attributes.get('_route') == path('services') %}text-primary{% else %}text-light{% endif %}" href="{{ path('services') }}">Services</a>
+            </li>
             {#<li class="nav-item">#}
                 {#<a class="nav-link" href="#">Link</a>#}
             {#</li>#}

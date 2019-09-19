@@ -26,10 +26,10 @@
         {% if sidebarDisable is not defined or sidebarDisable != true %}
             {% include '/partials/sidebar.html.twig' %}
         {% endif %}
-        <div class="col">
+        <main class="col pt-3" role="main">
             {# Main Body Content Here #}
             {% block body %}{% endblock %}
-        </div>
+        </main>
     </div>
 </div>
 
