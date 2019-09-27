@@ -3,16 +3,21 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * Class Client
  *
- * @ORM\Entity
- * @ORM\Table(name="clients")
+ * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ * @ORM\Table(name="clients",
+ *     uniqueConstraints={@UniqueConstraint(name="client_safe_name", columns={"client_safe_name"})},
+ *     indexes={@Index(name="client_id", columns={"client_id"})}
+ * )
  *
  * @package App\Entity
  */
-class Client
+class Client extends Entity
 {
     /**
      * @var int
@@ -33,38 +38,35 @@ class Client
     /**
      * @var string
      *
-     * @ORM\Id
-     * @ORM\Column(type="string", name="client_safe_name")
+     * @ORM\Column(type="string", name="client_safe_name", unique=true)
      */
     protected $safe_name;
 
     /**
-     * @var string $created
+     * @var \DateTime $created
      *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime" name="client_created")
+     * @ORM\Column(type="datetime", name="client_created")
      */
     private $created;
 
     /**
-     * @var string $updated
+     * @var \DateTime $updated
      *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime" name="client_updated" nullable="true")
+     * @ORM\Column(type="datetime", name="client_updated", nullable=true)
      */
     private $updated;
 
     /**
-     * @var string $deleted
+     * @var \DateTime $deleted
      *
-     * @ORM\Column(type="datetime" name="client_deleted" nullable="true")
+     * @ORM\Column(type="datetime", name="client_deleted", nullable=true)
      */
     private $deleted;
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId (): int
     {
         return $this->id;
     }
@@ -72,7 +74,7 @@ class Client
     /**
      * @param int $id
      */
-    public function setId(int $id): void
+    public function setId (int $id): void
     {
         $this->id = $id;
     }
@@ -80,7 +82,7 @@ class Client
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName (): string
     {
         return $this->name;
     }
@@ -88,15 +90,16 @@ class Client
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public function setName (string $name): void
     {
         $this->name = $name;
+        $this->setUpdated();
     }
 
     /**
      * @return string
      */
-    public function getSafeName(): string
+    public function getSafeName (): string
     {
         return $this->safe_name;
     }
@@ -104,56 +107,122 @@ class Client
     /**
      * @param string $safe_name
      */
-    public function setSafeName(string $safe_name): void
+    public function setSafeName (string $safe_name): void
     {
         $this->safe_name = $safe_name;
+        $this->setUpdated();
     }
 
     /**
      * @return string
      */
-    public function getCreated(): string
+    public function getCreated (): string
     {
-        return $this->created;
+        return $this->created->format(parent::DATE_FORMAT);
     }
 
     /**
      * @param string $created
      */
-    public function setCreated(string $created): void
+    public function setCreated (string $created = "now"): void
     {
-        $this->created = $created;
+        try {
+            $this->created = new \DateTime($created);
+            $this->setUpdated();
+        } catch (\Exception $e) {
+            // Silence
+        }
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUpdated(): string
+    public function getUpdated (): ?string
     {
-        return $this->updated;
+        if (!empty($this->updated)) {
+            return $this->updated->format(parent::DATE_FORMAT);
+        } else {
+            return null;
+        }
     }
 
     /**
      * @param string $updated
      */
-    public function setUpdated(string $updated): void
+    public function setUpdated (string $updated = "now"): void
     {
-        $this->updated = $updated;
+        try {
+            $this->updated = new \DateTime($updated);
+        } catch (\Exception $e) {
+            // Silence
+        }
+
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDeleted(): string
+    public function getDeleted (): ?string
     {
-        return $this->deleted;
+        if (!empty($this->deleted)) {
+            return $this->deleted->format(parent::DATE_FORMAT);
+        } else {
+            return null;
+        }
     }
 
     /**
      * @param string $deleted
      */
-    public function setDeleted(string $deleted): void
+    public function setDeleted (string $deleted = "now"): void
     {
-        $this->deleted = $deleted;
+        try {
+            $this->deleted = new \DateTime($deleted);
+            $this->setUpdated();
+        } catch (\Exception $e) {
+            // Silence
+        }
+    }
+
+    /**
+     * generateSafeName()
+     *
+     * Takes the passed string and creates a safe name
+     *
+     * @param string $name
+     */
+    public function generateSafeName (string $name) {
+        $name = preg_replace('/[^\da-z ]/i', '', $name);
+        $name = preg_replace('/ /i', '-', $name);
+        $name = strtolower($name);
+        $this->safe_name = $name;
+        $this->setUpdated();
+    }
+
+    /**
+     * factory()
+     *
+     * Takes an array of values and generates
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function factory (array $data = array())
+    {
+        $requiredKeys = array(
+            "client_name",
+        );
+        foreach ($requiredKeys as $key) {
+            if (!array_key_exists($key, $data) || empty($data[$key])) {
+                return false;
+            }
+        }
+
+        $this->setName(trim($data['client_name']));
+        $this->generateSafeName($this->getName());
+        $this->setCreated(date(parent::DATE_FORMAT));
+
+        return true;
     }
 }

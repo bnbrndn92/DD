@@ -26,11 +26,4 @@ services:
       driver: none
     environment:
       ENVIRONMENT: "dev"
-#      DB_DRIVER: "mysql"
-#      DB_SERVER: "db1-cluster-1.cluster-cbydemspsfwq.eu-west-1.rds.amazonaws.com"
-#      DB_USER: "divine"
-#      DB_PASSWORD: "rNHXnvGaDd2C5YbH"
-#      DB_DATABASE: "divine_staging"
-#      DB_SCHEMA: "public"
-#      DB_TABLE_PREFIX: ""
-#      DB_PORT: ""
+      DATABASE_URL: "mysql://data-dashboard:data-dashboard@db1-cluster-1.cluster-cbydemspsfwq.eu-west-1.rds.amazonaws.com:3306/together-data-dashboard"
