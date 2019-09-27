@@ -2,30 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Client;
-use App\Repository\ClientRepository;
+use App\Entity\Service;
+use App\Repository\ServiceRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ClientController extends Controller
+class ServiceController extends Controller
 {
     /**
-     * createClient()
+     * createService()
      *
      * Process:
      * Checks API access & JSON body content is present
-     * Creates a new Client entity
-     * Checks that a Client with the generated safe name doesn't exist
-     * Creates the Client
      *
-     * @Route("/client/create", name="client-create")
+     * @Route("/service/create", name="service-create")
      *
      * @param Request $request
      * @return Response
      */
-    public function createClient (Request $request): Response
+    public function createService (Request $request): Response
     {
         // Check that API access is allowed
         $this->checkApiAccess($request);
@@ -35,31 +32,31 @@ class ClientController extends Controller
 
         // Get the entity manager and create an instance
         $entityManager = $this->getDoctrine()->getManager();
-        $client = new Client();
+        $service = new Service();
 
-        if (!$client->factory($data)) {
-            $this->abruptEnd(400, "Client factory failed");
+        if (!$service->factory($data)) {
+            $this->abruptEnd(400, "Service factory failed");
         }
 
         // Check to see if the client already exists by the safe name
-        /** @var ClientRepository $clientRepo */
-        $clientRepo = $this->getDoctrine()
-            ->getRepository(Client::class);
+        /** @var ServiceRepository $serviceRepo */
+        $serviceRepo = $this->getDoctrine()
+            ->getRepository(Service::class);
 
-        $existingClient = $clientRepo->findByClientSafeName($client->getSafeName());
+        $existingService = $serviceRepo->findByServiceSafeName($service->getSafeName());
 
-        if (!empty($existingClient)) {
-            // Client with tha safe name already exists -> return response
+        if (!empty($existingService)) {
+            // Service with tha safe name already exists -> return response
             return new JsonResponse([
                 "success" => false,
-                "message" => "A client with that name already exists.",
+                "message" => "A service with that name already exists.",
             ],409);
         }
 
         $inserted = false;
         try {
             // Persist & flush the data
-            $entityManager->persist($client);
+            $entityManager->persist($service);
             $entityManager->flush();
             $inserted = true;
         } catch (\Exception $e) {
@@ -78,7 +75,7 @@ class ClientController extends Controller
 
         return new JsonResponse([
             "success" => true,
-            "message" => "Client created.",
+            "message" => "Service created.",
         ],201);
     }
 }
