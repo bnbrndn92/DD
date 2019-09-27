@@ -2,30 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Service;
-use App\Repository\ServiceRepository;
+use App\Entity\Frontend;
+use App\Repository\FrontendRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ServiceController extends Controller
+class FrontendController extends Controller
 {
     /**
-     * createService()
+     * createFrontend()
      *
      * Process:
      * Checks API access & JSON body content is present
-     * Creates a new Service entity
-     * Checks that the safe name doesn't already exist
-     * Creates the new Service
      *
-     * @Route("/service/create", name="service-create")
+     * @Route("/frontend/create", name="frontend-create")
      *
      * @param Request $request
      * @return Response
      */
-    public function createService (Request $request): Response
+    public function createFrontend (Request $request) : Response
     {
         // Check that API access is allowed
         $this->checkApiAccess($request);
@@ -35,31 +32,31 @@ class ServiceController extends Controller
 
         // Get the entity manager and create an instance
         $entityManager = $this->getDoctrine()->getManager();
-        $service = new Service();
+        $frontend = new Frontend();
 
-        if (!$service->factory($data)) {
-            $this->abruptEnd(400, "Service factory failed");
+        if (!$frontend->factory($data)) {
+            $this->abruptEnd(400, "Frontend factory failed");
         }
 
-        // Check to see if the service already exists by the safe name
-        /** @var ServiceRepository $serviceRepo */
-        $serviceRepo = $this->getDoctrine()
-            ->getRepository(Service::class);
+        // Check to see if the frontend already exists by the safe name
+        /** @var FrontendRepository $frontendRepo */
+        $frontendRepo = $this->getDoctrine()
+            ->getRepository(Frontend::class);
 
-        $existingService = $serviceRepo->findByServiceSafeName($service->getSafeName());
+        $existingService = $frontendRepo->findByFrontendName($frontend->getName());
 
         if (!empty($existingService)) {
-            // Service with tha safe name already exists -> return response
+            // Frontend with that name already exists -> return response
             return new JsonResponse([
                 "success" => false,
-                "message" => "A service with that name already exists.",
+                "message" => "A frontend with that name already exists.",
             ],409);
         }
 
         $inserted = false;
         try {
             // Persist & flush the data
-            $entityManager->persist($service);
+            $entityManager->persist($frontend);
             $entityManager->flush();
             $inserted = true;
         } catch (\Exception $e) {
@@ -78,7 +75,7 @@ class ServiceController extends Controller
 
         return new JsonResponse([
             "success" => true,
-            "message" => "Service created.",
+            "message" => "Frontend created.",
         ],201);
     }
 }
