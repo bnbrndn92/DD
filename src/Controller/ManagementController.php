@@ -13,11 +13,11 @@ class ManagementController extends Controller
      */
     public function index()
     {
-        return $this->render('pages/bandwidth.html.twig', [
-            "pageTitle" => "Bandwidth",
-            "pageDescription" => "Page description",
-            "pageKeywords" => "Page,Keywords",
-            "bodyClass" => "bandwidth-page",
+        return $this->render('pages/management.html.twig', [
+            "pageTitle" => "Management Control",
+            "pageDescription" => "User client & services manager",
+            "pageKeywords" => "management, services, users, frontends",
+            "bodyClass" => "management-page",
         ]);
     }
 }

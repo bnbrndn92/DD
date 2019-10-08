@@ -2,20 +2,20 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item text-center">
-                <a class="nav-link font-weight-bold text-center {% if app.request.attributes.get('_route') == "dashboard-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('dashboard-home') }}">Dashboard</a>
+                <a class="nav-link font-weight-bold text-center text-uppercase {% if app.request.attributes.get('_route') == "dashboard-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('dashboard-home') }}">Dashboard</a>
             </li>
             <li class="nav-item text-center">
-                <a class="nav-link font-weight-bold text-center {% if app.request.attributes.get('_route') == "bandwidth-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('bandwidth-home') }}">Bandwidth</a>
+                <a class="nav-link font-weight-bold text-center text-uppercase {% if app.request.attributes.get('_route') == "bandwidth-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('bandwidth-home') }}">Bandwidth</a>
             </li>
             <li class="nav-item text-center">
-                <a class="nav-link font-weight-bold text-center {% if app.request.attributes.get('_route') == "dbio-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('dbio-home') }}">DB IO</a>
+                <a class="nav-link font-weight-bold text-center text-uppercase {% if app.request.attributes.get('_route') == "dbio-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('dbio-home') }}">DB IO</a>
             </li>
             <li class="nav-item text-center">
-                <a class="nav-link font-weight-bold text-center {% if app.request.attributes.get('_route') == "services-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('services-home') }}">Services</a>
+                <a class="nav-link font-weight-bold text-center text-uppercase {% if app.request.attributes.get('_route') == "services-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('services-home') }}">Services</a>
             </li>
             {# TODO - Only show management for Together uses #}
-            <li class="nav-item text-center border-top mt-5">
-                <a class="nav-link font-weight-bold text-center {% if app.request.attributes.get('_route') == "management-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('management-home') }}">Management</a>
+            <li class="nav-item text-center border-top mt-5 pt-2">
+                <a class="nav-link font-weight-bold text-center text-uppercase {% if app.request.attributes.get('_route') == "management-home" %}text-primary{% else %}text-secondary{% endif %}" href="{{ path('management-home') }}">Management</a>
             </li>
         </ul>
     </div>
