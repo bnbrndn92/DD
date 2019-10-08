@@ -16,4 +16,18 @@ header {
       height: 40px;
     }
   }
+
+  .navbar-collapse {
+    .navbar-nav {
+      .dropdown {
+        .dropdown-menu {
+          .dropdown-item {
+            &:hover {
+              background: transparent;
+            }
+          }
+        }
+      }
+    }
+  }
 }

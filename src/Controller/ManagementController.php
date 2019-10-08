@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 
-class BandwidthController extends Controller
+class ManagementController extends Controller
 {
     /**
-     * @Route("/bandwidth", name="bandwidth-home")
+     * index()
+     *
+     * @Route("/management", name="management-home")
      */
     public function index()
     {

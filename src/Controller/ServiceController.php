@@ -12,6 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class ServiceController extends Controller
 {
     /**
+     * index()
+     *
+     * Displays the services page
+     *
+     * @Route("/services", name="services-home")
+     */
+    public function index()
+    {
+        return $this->render('pages/services.html.twig', [
+            "pageTitle" => "Services",
+            "pageDescription" => "Page description",
+            "pageKeywords" => "Page,Keywords",
+            "bodyClass" => "dashboard-page",
+        ]);
+    }
+
+    /**
      * createService()
      *
      * Process:

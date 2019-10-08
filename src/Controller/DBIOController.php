@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DBIOController extends Controller
 {
     /**
-     * @Route("/dbio", name="dbio")
+     * @Route("/dbio", name="dbio-home")
      */
     public function index()
     {
