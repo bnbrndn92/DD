@@ -67,4 +67,23 @@ class ManagementController extends Controller
             "bodyClass" => "management-client-page"
         ]);
     }
+
+    /**
+     * viewService()
+     *
+     * @Route("/management/service/{id}", name="management-view-service", requirements={"id"="\d+"})
+     *
+     * @param int $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewService (int $id)
+    {
+        return $this->render('pages/management/view-service.html.twig', [
+            "pageTitle" => "Service Name",
+            "pageDescription" => "Service page",
+            "pageKeywords" => "management, service",
+            "bodyClass" => "management-service-page"
+        ]);
+    }
 }

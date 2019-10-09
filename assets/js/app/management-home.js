@@ -1,9 +1,19 @@
 (function(D, d, $) {
     var managementHome = function() {
         /**
-         * @var false
+         * @var {bool}
          */
         var processing = false;
+
+        /**
+         * @var {int}
+         */
+        var clientId = null;
+
+        /**
+         * @var {int}
+         */
+        var serviceId = null;
 
         /**
          * createTile()
@@ -140,6 +150,8 @@
                              $('#management-services-list .alert').removeClass('d-none');
                          }
 
+                         $('#management-services-list h3').html("Services");
+
                          processing = false;
                      }
                  });
@@ -149,19 +161,49 @@
         });
 
         // Detect click on a client selector button
-        $('#management-clients-list a').on('click', function (event) {
+        $('body').on('click', '#management-clients-list ul a.text-left', function (event) {
             event.preventDefault();
             event.stopPropagation();
 
             // Pull the data from this button
             var id = $(this).data('id');
 
+            // Adjust the display
             $('#management-services-list .alert').addClass('d-none');
             $('#management-services-list ul').remove();
+            $('#management-services-list h3').html("Loading...");
 
+            clientId = parseInt(id);
             getServices(id);
 
-        })
+            $('#management-services-list .btn').removeClass('disabled');
+        });
+
+        // Detect click on a service selector button
+        $('body').on('click', '#management-services-list ul a.text-left', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            // Pull the data from this button
+            var id = $(this).data('id');
+
+            $('#management-frontends-list .alert').addClass('d-none');
+            $('#management-frontends-list ul').remove();
+            $('#management-frontends-list h3').html("Loading...");
+
+            serviceId = parseInt(id);
+            // TODO - Populate
+
+            $('#management-frontends-list .btn').removeClass('disabled');
+        });
+
+        // Detect click on a frontend selector button
+        $('body').on('click', '#management-frontends-list ul a.text-left', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            // TODO - Populate
+        });
     };
 
     D.managementHome = new managementHome();
