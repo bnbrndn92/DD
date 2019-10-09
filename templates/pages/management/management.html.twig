@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col mb-4 p-0">
+                <h1 class="pb-4 text-center border-bottom">{% if pageTitle is defined and pageTitle %}{{ pageTitle }}{% else %}Management Control{% endif %}</h1>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md mb-2 mr-md-1 mb-md-0 p-3 border bg-light text-center" id="management-clients-list">
+                <h3 class="mb-3 p-0 pb-3 text-center border-bottom">Clients</h3>
+                {% if clients is defined and clients %}
+                    <ul class="list-group mb-3 rounded-0">
+                        {% for client in clients %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-10 text-left">
+                                        <a href="#" class="text-secondary text-left" data-safe="{{ client.getSafeName() }}" data-id="{{ client.getId() }}">{{ client.getName() }}</a>
+                                    </div>
+                                    <div class="col-2 pl-0 text-right">
+                                        <a href="{{ path('management-view-client', { 'id': client.getId() }) }}" class="">
+                                            <i class="" style="font-style: normal;">&#9881;</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="alert alert-light text-center default-alert" role="alert">No clients found</div>
+                {% endif %}
+                <a href="{{ path("management-create-client") }}" class="d-block btn btn-md btn-primary">+</a>
+            </div>
+            <div class="col-md mb-2 mr-md-1 mb-md-0 p-3 border bg-light" id="management-services-list">
+                <h3 class="mb-3 p-0 pb-3 text-center border-bottom">Services</h3>
+                <div class="alert alert-light text-center default-alert" role="alert">Select a client to view</div>
+                <a href="{{ path("management-create-client") }}" class="d-block btn btn-md btn-primary">+</a>
+            </div>
+            <div class="col-md mb-2 mr-md-1 mb-md-0 p-3 border bg-light" id="management-frontend-list">
+                <h3 class="mb-3 p-0 pb-3 text-center border-bottom">Frontends</h3>
+                <div class="alert alert-light text-center default-alert" role="alert">Select a client & service to view</div>
+                <a href="{{ path("management-create-client") }}" class="d-block btn btn-md btn-primary">Assign</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-2 mb-md-0 p-3 border bg-light text-center" id="management-unassigned-frontends">
+                <h3 class="mb-3 p-0 pb-3 text-center border-bottom">Unassigned Frontends</h3>
+                <div class="alert alert-light text-center default-alert" role="alert">No unassigned frontends found</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

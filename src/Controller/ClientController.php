@@ -79,6 +79,7 @@ class ClientController extends Controller
         return new JsonResponse([
             "success" => true,
             "message" => "Client created.",
+            "location" => "/management/client/" . $client->getId()
         ],201);
     }
 }
