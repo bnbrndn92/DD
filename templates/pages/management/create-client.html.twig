@@ -9,13 +9,13 @@
         </div>
         <div class="row justify-content-md-center">
             <div class="col col-md-8">
-                <form action="{{ path('client-create') }}" method="post" id="create-client-form">
+                <form action="{{ path('client-create') }}" method="post" id="create-client-form" class="text-center">
                     <div class="form-group">
                         <label for="client_name">Name</label>
                         <input type="text" class="form-control" name="client_name" id="client_name" aria-describedby="clientNameHelp" placeholder="Enter client name" required>
                         <small id="clientNameHelp" class="form-text text-muted">Please enter a suitable client name</small>
                     </div>
-                    <button type="submit" class="btn btn-md btn-primary">Create</button>
+                    <button type="submit" class="btn btn-md btn-primary font-weight-bold text-uppercase font-weight-bold">Create</button>
                 </form>
             </div>
         </div>
