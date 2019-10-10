@@ -16,6 +16,11 @@
         var serviceId = null;
 
         /**
+         * @var {String}
+         */
+        var createServiceLink = null;
+
+        /**
          * createTile()
          * @type {Function}
          *
@@ -146,11 +151,15 @@
                              });
 
                              $tiles.insertBefore($('#management-services-list .btn'));
+
                          } else {
                              $('#management-services-list .alert').removeClass('d-none');
                          }
 
                          $('#management-services-list h3').html("Services");
+
+                         // Update the create service button with a client pre-set link
+                         $('#create-service-button').attr("href", "/management/client/" + clientId + "/service/create");
 
                          processing = false;
                      }
@@ -168,6 +177,12 @@
             // Pull the data from this button
             var id = $(this).data('id');
 
+            // Pull the create service link
+            if (createServiceLink === null) {
+                createServiceLink = $('#create-service-button').attr('href');
+                console.log(createServiceLink);
+            }
+
             // Adjust the display
             $('#management-services-list .alert').addClass('d-none');
             $('#management-services-list ul').remove();
@@ -176,7 +191,6 @@
             clientId = parseInt(id);
             getServices(id);
 
-            $('#management-services-list .btn').removeClass('disabled');
         });
 
         // Detect click on a service selector button
@@ -193,8 +207,6 @@
 
             serviceId = parseInt(id);
             // TODO - Populate
-
-            $('#management-frontends-list .btn').removeClass('disabled');
         });
 
         // Detect click on a frontend selector button
