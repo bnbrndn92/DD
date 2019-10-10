@@ -1,58 +1,18 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Management;
 
+use App\Controller\Controller;
 use App\Entity\Client;
 use App\Entity\Frontend;
 use App\Entity\Service;
 use App\Repository\ClientRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class ManagementController extends Controller
+class ClientManagementController extends Controller
 {
-    /**
-     * index()
-     *
-     * @Route("/management", name="management-home")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function index()
-    {
-        // Pull a list of all the current clients
-        $clients = $this->getDoctrine()
-            ->getRepository(Client::class)
-            ->findBy([
-                "deleted" => null
-            ]);
-
-        return $this->render('pages/management/management.html.twig', [
-            "pageTitle" => "Management",
-            "pageDescription" => "User client & services manager",
-            "pageKeywords" => "management, services, users, frontends",
-            "bodyClass" => "management-home-page",
-            "clients" => $clients
-        ]);
-    }
-
-    /**
-     * createClient()
-     *
-     * @Route("/management/client/create", name="management-create-client")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function createClient ()
-    {
-        return $this->render('pages/management/create-client.html.twig', [
-            "pageTitle" => "Create Client",
-            "pageDescription" => "Management create client page",
-            "pageKeywords" => "management, create, client",
-            "bodyClass" => "management-create-client-page",
-        ]);
-    }
-
     /**
      * viewClient()
      *
@@ -63,9 +23,9 @@ class ManagementController extends Controller
      * @param Request $request
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function viewClient (Request $request, int $id)
+    public function viewClient (Request $request, int $id) : Response
     {
         /** @var ClientRepository $clientRepo */
         $clientRepo = $this->getDoctrine()
@@ -101,7 +61,7 @@ class ManagementController extends Controller
             "client_id" => $client->getId(),
         ]);
 
-        return $this->render('pages/management/view-client.html.twig', [
+        return $this->render('pages/management/client/view.html.twig', [
             "pageTitle" => ucwords($client->getName()),
             "pageDescription" => "Client page",
             "pageKeywords" => "management, client",
@@ -113,16 +73,39 @@ class ManagementController extends Controller
     }
 
     /**
+     * createClient()
+     *
+     * TODO - Include auth checks
+     *
+     * @Route("/management/client/create", name="management-create-client")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function createClient (Request $request) : Response
+    {
+        return $this->render('pages/management/client/create.html.twig', [
+            "pageTitle" => "Create Client",
+            "pageDescription" => "Management create client page",
+            "pageKeywords" => "management, create, client",
+            "bodyClass" => "management-create-client-page",
+        ]);
+    }
+
+    /**
      * editClient()
+     *
+     * TODO - Include auth checks
      *
      * @Route("/management/client/{id}/edit", name="management-edit-client", requirements={"id"="\d+"})
      *
      * @param Request $request
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function editClient (Request $request, int $id)
+    public function editClient (Request $request, int $id) : Response
     {
         /** @var ClientRepository $clientRepo */
         $clientRepo = $this->getDoctrine()
@@ -142,7 +125,7 @@ class ManagementController extends Controller
             ]);
         }
 
-        return $this->render('pages/management/edit-client.html.twig', [
+        return $this->render('pages/management/client/edit.html.twig', [
             "pageTitle" => "Edit: " . ucwords($client->getName()),
             "pageDescription" => "Edit client page",
             "pageKeywords" => "management, client",
@@ -152,40 +135,24 @@ class ManagementController extends Controller
     }
 
     /**
-     * viewService()
+     * deleteClient()
      *
-     * @Route("/management/service/{id}", name="management-view-service", requirements={"id"="\d+"})
+     * TODO - Include auth checks
      *
+     * @Route("/management/client/{id}/delete", name="management-delete-client", requirements={"id"="\d+"})
+     *
+     * @param Request $request
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function viewService (int $id)
+    public function deleteClient (Request $request, int $id) : Response
     {
-        return $this->render('pages/management/view-service.html.twig', [
-            "pageTitle" => "Service Name",
-            "pageDescription" => "Service page",
-            "pageKeywords" => "management, service",
-            "bodyClass" => "management-service-page"
-        ]);
-    }
-
-    /**
-     * viewFrontend()
-     *
-     * @Route("/management/frontend/{id}", name="management-view-frontend", requirements={"id"="\d+"})
-     *
-     * @param int $id
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function viewFrontend (int $id)
-    {
-        return $this->render('pages/management/view-frontend.html.twig', [
-            "pageTitle" => "Frontend Name",
-            "pageDescription" => "frontend page",
-            "pageKeywords" => "management, frontend",
-            "bodyClass" => "management-frontend-page"
+        return $this->render('pages/management/client/delete.html.twig', [
+            "pageTitle" => "Edit: ",
+            "pageDescription" => "Edit client page",
+            "pageKeywords" => "management, client",
+            "bodyClass" => "management-edit-client-page",
         ]);
     }
 }
