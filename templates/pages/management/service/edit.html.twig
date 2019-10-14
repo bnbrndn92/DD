@@ -1,1 +1,54 @@
-Service - Edit
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col mb-4 p-0">
+                <h1 class="pb-4 text-center border-bottom">{% if pageTitle is defined and pageTitle %}{{ pageTitle }}{% else %}Edit Service{% endif %}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-8 p-0 pr-md-3">
+                <form action="{{ path("service-edit", { 'serviceId': service.getId() }) }}" method="patch" id="edit-service-form" class="text-center text-md-left">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="border-top-0">Field</th>
+                                <th scope="col" class="border-top-0">Original</th>
+                                <th scope="col" class="border-top-0">New</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Name</th>
+                                <td>{{ service.getName() }}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="service_name" class="sr-only">Name</label>
+                                        <input type="text" class="form-control" name="service_name" id="service_name">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Safe Name</th>
+                                <td>{{ service.getSafeName() }}</td>
+                                <td class="font-italic text-muted">Generated</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Client</th>
+                                <td>{{ client.getName() }}</td>
+                                <td class="font-italic text-muted">Fixed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="mb-3 btn btn-md btn-primary font-weight-bold text-uppercase font-weight-bold">Update</button>
+                </form>
+            </div>
+            <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center">
+                <h3 class="mb-3 pb-3 border-bottom">Options</h3>
+                <a href="{{ path("management-view-service", { 'serviceId': service.getId() }) }}" class="d-block mb-3 btn btn-md btn-white border border-primary text-primary text-uppercase font-weight-bold">back</a>
+                <a href="{{ path("management-delete-service", { 'serviceId': service.getId() }) }}" class="d-block mb-3 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

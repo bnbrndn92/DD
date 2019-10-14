@@ -10,75 +10,81 @@
         <div class="row">
             <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center order-md-2">
                 <h3 class="mb-3 pb-3 border-bottom">Options</h3>
-                <a href="{{ path("management-edit-client", { 'id': client.getId() }) }}" class="d-block mb-3 btn btn-md btn-secondary text-uppercase font-weight-bold">Edit</a>
-                <a href="{{ path("management-delete-client", { 'id': client.getId() }) }}" class="d-block mb-3 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
+                <a href="{{ path("management-edit-service", { 'serviceId': service.getId() }) }}" class="d-block mb-3 btn btn-md btn-secondary text-uppercase font-weight-bold">Edit</a>
+                <a href="{{ path("management-delete-service", { 'serviceId': service.getId() }) }}" class="d-block mb-3 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
             </div>
             <div class="col-12 col-md-8 order-md-1 p-0 pr-md-3">
-                <div class="accordion" id="view-client-accordion">
+                <div class="accordion" id="view-service-accordion">
                     <div class="card">
-                        <div class="card-header" id="client-details">
+                        <div class="card-header" id="service-details">
                             <h2 class="mb-0">
-                                <button class="btn btn-link flr text-uppercase text-secondary font-weight-bold" type="button" data-toggle="collapse" data-target="#collapse-client" aria-expanded="true" aria-controls="collapse-client">Details:</button>
+                                <button class="btn btn-link flr text-uppercase text-secondary font-weight-bold" type="button" data-toggle="collapse" data-target="#collapse-service" aria-expanded="true" aria-controls="collapse-service">Details:</button>
                             </h2>
                         </div>
-                        <div id="collapse-client" class="collapse show" aria-labelledby="client-details" data-parent="#view-client-accordion">
+                        <div id="collapse-service" class="collapse show" aria-labelledby="service-details" data-parent="#view-service-accordion">
                             <div class="card-body">
                                 <table class="table">
                                     <tbody>
-                                    <tr>
-                                        <th scope="row" class="border-top-0">Name</th>
-                                        <td class="border-top-0">{% if client.getName() is defined and client.getName() %}{{ client.getName() }}{% else %}<i>Missing</i>{% endif %}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Safe Name</th>
-                                        <td>{% if client.getSafeName() is defined and client.getSafeName() %}{{ client.getSafeName() }}{% else %}<i>Missing</i>{% endif %}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Created</th>
-                                        <td>{% if client.getCreated() is defined and client.getCreated() %}{{ client.getCreated() }}{% else %}<i>Missing</i>{% endif %}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Updated</th>
-                                        <td>{% if client.getUpdated() is defined and client.getUpdated() %}{{ client.getUpdated() }}{% else %}<i>Missing</i>{% endif %}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Deleted</th>
-                                        <td>{% if client.getDeleted() is defined and client.getDeleted() %}{{ client.getDeleted() }}{% else %}<i>Null</i>{% endif %}</td>
-                                    </tr>
+                                        <tr>
+                                            <th scope="row" class="border-top-0">Name</th>
+                                            <td class="border-top-0">{% if service.getName() is defined and service.getName() %}{{ service.getName() }}{% else %}<i>Missing</i>{% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Safe Name</th>
+                                            <td>{% if service.getSafeName() is defined and service.getSafeName() %}{{ service.getSafeName() }}{% else %}<i>Missing</i>{% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Created</th>
+                                            <td>{% if service.getCreated() is defined and service.getCreated() %}{{ service.getCreated() }}{% else %}<i>Missing</i>{% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Updated</th>
+                                            <td>{% if service.getUpdated() is defined and service.getUpdated() %}{{ service.getUpdated() }}{% else %}<i>Missing</i>{% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Deleted</th>
+                                            <td>{% if service.getDeleted() is defined and service.getDeleted() %}{{ service.getDeleted() }}{% else %}<i>Null</i>{% endif %}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header" id="service-details">
+                        <div class="card-header" id="client-details">
                             <h2 class="mb-0">
-                                <button class="btn btn-link text-uppercase text-secondary font-weight-bold" type="button" data-toggle="collapse" data-target="#collapse-services" aria-expanded="true" aria-controls="collapse-services">Services:</button>
+                                <button class="btn btn-link text-uppercase text-secondary font-weight-bold" type="button" data-toggle="collapse" data-target="#collapse-client" aria-expanded="true" aria-controls="collapse-client">Client:</button>
                             </h2>
                         </div>
-                        <div id="collapse-services" class="collapse" aria-labelledby="service-details" data-parent="#view-client-accordion">
+                        <div id="collapse-client" class="collapse" aria-labelledby="client-details" data-parent="#view-service-accordion">
                             <div class="card-body">
-                                {% if services is defined and services and services|length > 0 %}
+                                {% if client is defined and client %}
                                     <table class="table">
                                         <tbody>
                                         <tr>
-                                            <th scope="col" class="border-top-0">Id</th>
-                                            <th scope="col" class="border-top-0">Name</th>
-                                            <th scope="col" class="border-top-0">Safe Name</th>
-                                            <th scope="col" class="border-top-0"></th>
+                                            <th scope="row" class="border-top-0">Name</th>
+                                            <td class="border-top-0">{% if client.getName() is defined and client.getName() %}{{ client.getName() }}{% else %}<i>Missing</i>{% endif %}</td>
                                         </tr>
-                                        {% for service in services %}
-                                            <tr>
-                                                <td>{{ service.getId() }}</td>
-                                                <td>{{ service.getName() }}</td>
-                                                <td>{{ service.getSafeName() }}</td>
-                                                <td><a href="{{ path('management-view-service', { 'id': service.getId() }) }}">View</a></td>
-                                            </tr>
-                                        {% endfor %}
+                                        <tr>
+                                            <th scope="row">Safe Name</th>
+                                            <td>{% if client.getSafeName() is defined and client.getSafeName() %}{{ client.getSafeName() }}{% else %}<i>Missing</i>{% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Created</th>
+                                            <td>{% if client.getCreated() is defined and client.getCreated() %}{{ client.getCreated() }}{% else %}<i>Missing</i>{% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Updated</th>
+                                            <td>{% if client.getUpdated() is defined and client.getUpdated() %}{{ client.getUpdated() }}{% else %}<i>Missing</i>{% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Deleted</th>
+                                            <td>{% if client.getDeleted() is defined and client.getDeleted() %}{{ client.getDeleted() }}{% else %}<i>Null</i>{% endif %}</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 {% else %}
-                                    <div class="alert alert-light text-center default-alert" role="alert">No services</div>
+                                    <div class="alert alert-light text-center default-alert" role="alert">No client</div>
                                 {% endif %}
                             </div>
                         </div>
@@ -89,7 +95,7 @@
                                 <button class="btn btn-link text-uppercase text-secondary font-weight-bold" type="button" data-toggle="collapse" data-target="#collapse-frontends" aria-expanded="true" aria-controls="collapse-frontends">Frontends:</button>
                             </h2>
                         </div>
-                        <div id="collapse-frontends" class="collapse" aria-labelledby="frontend-details" data-parent="#view-client-accordion">
+                        <div id="collapse-frontends" class="collapse" aria-labelledby="frontend-details" data-parent="#view-service-accordion">
                             <div class="card-body">
                                 {% if frontends is defined and frontends and frontends|length > 0 %}
                                     <table class="table">
@@ -109,7 +115,7 @@
                                         </tbody>
                                     </table>
                                 {% else %}
-                                    <div class="alert alert-light text-center default-alert" role="alert">No services</div>
+                                    <div class="alert alert-light text-center default-alert" role="alert">No frontends</div>
                                 {% endif %}
                             </div>
                         </div>

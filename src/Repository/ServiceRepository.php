@@ -23,11 +23,23 @@ class ServiceRepository extends ServiceEntityRepository
      * findByServiceSafeName()
      *
      * @param string $value
-     *
+     * @param bool $activeOnly
      * @return mixed
      */
-    public function findByServiceSafeName (string $value)
+    public function findByServiceSafeName (string $value, bool $activeOnly = false)
     {
+        if ($activeOnly) {
+            return $this->createQueryBuilder('s')
+                ->andWhere('s.safe_name = :val')
+                ->andWhere('s.deleted IS NULL')
+                ->setParameter('val', $value)
+                ->orderBy('s.id', 'ASC')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+
         return $this->createQueryBuilder('s')
             ->andWhere('s.safe_name = :val')
             ->setParameter('val', $value)

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Service;
 use App\Repository\ServiceRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -153,5 +154,119 @@ class ServiceController extends Controller
             "message" => "Services found",
             "data" => json_decode($data),
         ],200);
+    }
+
+    /**
+     * editService()
+     *
+     * Process:
+     *
+     * TODO - Will need access permission checks
+     *
+     * @Route("/service/{serviceId}/edit", name="service-edit", requirements={"serviceId"="\d+"})
+     *
+     * @param Request $request
+     * @param int $serviceId
+     *
+     * @return Response
+     */
+    public function editService (Request $request, int $serviceId) : Response
+    {
+        // Check that API access is allowed
+        $this->checkApiAccess($request);
+
+        // Check that POST data has been provided & decode
+        $data = $this->checkApiJson($request);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $service = $entityManager->getRepository(Service::class)->findOneBy(["id" => intval($serviceId)]);
+
+        if (empty($service)) {
+            return new JsonResponse([
+                "success" => false,
+                "message" => "No service found",
+            ],404);
+        }
+
+        // Check for updated fields
+        if (array_key_exists("service_name", $data)) {
+            // Compare the old and the new
+            if (trim($data['service_name']) !== $service->getName()) {
+                // Update the service name
+                $service->setName(trim($data['service_name']));
+                $service->generateSafeName($service->getName());
+
+                // Check if a service exists with that name already
+                $existingService = $entityManager->getRepository(Service::class)->findByServiceSafeName($service->getSafeName(), true);
+
+                if (!empty($existingService)) {
+                    // Service with that name already exists
+                    return new JsonResponse([
+                        "success" => false,
+                        "message" => "A service with that name already exists.",
+                    ],409);
+                }
+            }
+        }
+
+        $entityManager->flush();
+
+        return new JsonResponse([
+            "success" => true,
+            "message" => "Service updated",
+            "location" => "/management/service/" . $service->getId()
+        ],200);
+    }
+
+    /**
+     * deleteService()
+     *
+     * Process:
+     * TODO
+     *
+     * TODO - Will need access permission checks
+     *
+     * @Route("/service/{serviceId}/delete", name="service-delete", requirements={"serviceId"="\d+"})
+     * @Route("/client/{clientId}/service/{serviceId}/delete", name="client-service-delete", requirements={"serviceId"="\d+","clientId"="\d+"})
+     *
+     * @param Request $request
+     * @param int $serviceId
+     * @param int $clientId
+     *
+     * @return Response
+     */
+    public function deleteService (Request $request, int $serviceId, int $clientId = null) : Response
+    {
+        // Check that API access is allowed
+        $this->checkApiAccess($request);
+
+        // Check that POST data has been provided & decode
+        $data = $this->checkApiJson($request);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $service = $entityManager->getRepository(Service::class)->findOneBy(["id" => intval($serviceId), "deleted" => null]);
+
+        if (empty($service)) {
+            return new JsonResponse([
+                "success" => false,
+                "message" => "No service found",
+            ],404);
+        }
+
+        $client = $entityManager->getRepository(Client::class)->findOneBy(["id" => intval($service->getClientId()), "deleted" => null]);
+
+        if (empty($client)) {
+            return new JsonResponse([
+                "success" => false,
+                "message" => "No associated client found",
+            ],500);
+        }
+
+        # TODO - Implement deletion
+
+        return new JsonResponse([
+            "success" => false,
+            "message" => "Method not complete",
+        ],500);
     }
 }

@@ -3,6 +3,12 @@
 namespace App\Controller\Management;
 
 use App\Controller\Controller;
+use App\Entity\Client;
+use App\Entity\Frontend;
+use App\Entity\Service;
+use App\Repository\ClientRepository;
+use App\Repository\FrontendRepository;
+use App\Repository\ServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,22 +20,69 @@ class ServiceManagementController extends Controller
      *
      * TOdO - Include auth checks
      *
-     * @Route("/management/service/{id}", name="management-view-service", requirements={"id"="\d+"})
+     * @Route("/management/service/{serviceId}", name="management-view-service", requirements={"serviceId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}", name="management-view-client-service", requirements={"clientId"="\d+","serviceId"="\d+"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int $serviceId
+     * @param int $clientId
      *
      * @return Response
      */
-    public function viewService (Request $request, int $id) : Response
+    public function viewService (Request $request, int $serviceId, int $clientId = null) : Response
     {
-        // Get the
+        /** @var ServiceRepository $serviceRepo */
+        $serviceRepo = $this->getDoctrine()
+            ->getRepository(Service::class);
+
+        $service = $serviceRepo->findOneBy([
+            "id" => intval($serviceId),
+        ]);
+
+        if (empty($service)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, service, error",
+                "bodyClass" => "error-page",
+                "message" => "No service data found",
+            ]);
+        }
+
+        /** @var ClientRepository $clientRepo */
+        $clientRepo = $this->getDoctrine()
+            ->getRepository(Client::class);
+
+        $client = $clientRepo->findOneBy([
+            "id" => intval($service->getClientId()),
+        ]);
+
+        if (empty($client)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, client, error",
+                "bodyClass" => "error-page",
+                "message" => "No client data found",
+            ]);
+        }
+
+        /** @var FrontendRepository $frontendRepo */
+        $frontendRepo = $this->getDoctrine()
+            ->getRepository(Frontend::class);
+
+        $frontends = $frontendRepo->findBy([
+            "service_id" => intval($service->getId()),
+        ]);
 
         return $this->render('pages/management/service/view.html.twig', [
-            "pageTitle" => "Service Name",
+            "pageTitle" => ucwords($service->getName()),
             "pageDescription" => "Service page",
             "pageKeywords" => "management, service",
-            "bodyClass" => "management-service-page"
+            "bodyClass" => "management-service-page",
+            "client" => $client,
+            "service" => $service,
+            "frontends" => $frontends,
         ]);
     }
 
@@ -61,20 +114,60 @@ class ServiceManagementController extends Controller
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/service/{id}", name="management-edit-service", requirements={"id"="\d+"})
+     * @Route("/management/service/{serviceId}/edit", name="management-edit-service", requirements={"serviceId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}/edit", name="management-edit-client-service", requirements={"serviceId"="\d+","clientId"="\d+"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int $serviceId
+     * @param int $clientId
      *
      * @return Response
      */
-    public function editService (Request $request, int $id) : Response
+    public function editService (Request $request, int $serviceId, int $clientId = null) : Response
     {
+        /** @var ServiceRepository $serviceRepo */
+        $serviceRepo = $this->getDoctrine()
+            ->getRepository(Service::class);
+
+        $service = $serviceRepo->findOneBy([
+            "id" => intval($serviceId),
+        ]);
+
+        if (empty($service)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, service, error",
+                "bodyClass" => "error-page",
+                "message" => "No service data found",
+            ]);
+        }
+
+        /** @var ClientRepository $clientRepo */
+        $clientRepo = $this->getDoctrine()
+            ->getRepository(Client::class);
+
+        $client = $clientRepo->findOneBy([
+            "id" => intval($service->getClientId()),
+        ]);
+
+        if (empty($client)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, client, error",
+                "bodyClass" => "error-page",
+                "message" => "No client data found",
+            ]);
+        }
+
         return $this->render('pages/management/service/edit.html.twig', [
-            "pageTitle" => "Service Name",
+            "pageTitle" => "Edit: " . ucwords($service->getName()),
             "pageDescription" => "Service page",
             "pageKeywords" => "management, service",
-            "bodyClass" => "management-service-page"
+            "bodyClass" => "management-service-page",
+            "client" => $client,
+            "service" => $service,
         ]);
     }
 
@@ -83,20 +176,69 @@ class ServiceManagementController extends Controller
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/service/{id}/delete", name="management-delete-service", requirements={"id"="\d+"})
+     * @Route("/management/service/{serviceId}/delete", name="management-delete-service", requirements={"serviceId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}/delete", name="management-delete-client-service", requirements={"serviceId"="\d+", "clientId"="\d+"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int $serviceId
+     * @param int $clientId
      *
      * @return Response
      */
-    public function deleteClient (Request $request, int $id) : Response
+    public function deleteClient (Request $request, int $serviceId, int $clientId = null) : Response
     {
+        /** @var ServiceRepository $serviceRepo */
+        $serviceRepo = $this->getDoctrine()
+            ->getRepository(Service::class);
+
+        $service = $serviceRepo->findOneBy([
+            "id" => intval($serviceId),
+        ]);
+
+        if (empty($service)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, service, error",
+                "bodyClass" => "error-page",
+                "message" => "No service data found",
+            ]);
+        }
+
+        /** @var ClientRepository $clientRepo */
+        $clientRepo = $this->getDoctrine()
+            ->getRepository(Client::class);
+
+        $client = $clientRepo->findOneBy([
+            "id" => intval($service->getClientId()),
+        ]);
+
+        if (empty($client)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, client, error",
+                "bodyClass" => "error-page",
+                "message" => "No client data found",
+            ]);
+        }
+
+        /** @var FrontendRepository $frontendRepo */
+        $frontendRepo = $this->getDoctrine()
+            ->getRepository(Frontend::class);
+
+        $frontends = $frontendRepo->findBy([
+            "service_id" => intval($service->getId()),
+        ]);
+
         return $this->render('pages/management/service/delete.html.twig', [
-            "pageTitle" => "Edit: ",
-            "pageDescription" => "Edit client page",
-            "pageKeywords" => "management, client",
-            "bodyClass" => "management-edit-client-page",
+            "pageTitle" => "Delete: " . ucwords($service->getName()),
+            "pageDescription" => "Delete service",
+            "pageKeywords" => "management, service",
+            "bodyClass" => "management-delete-service-page",
+            "client" => $client,
+            "service" => $service,
+            "frontends" => $frontends,
         ]);
     }
 }

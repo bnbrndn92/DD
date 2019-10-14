@@ -155,6 +155,7 @@ class ClientController extends Controller
      * deleteClient()
      *
      * Process:
+     * TODO
      *
      * @Route("/client/{id}/delete", name="client-delete", requirements={"id"="\d+"})
      *

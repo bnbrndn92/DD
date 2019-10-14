@@ -85,6 +85,7 @@
                         complete: function (xhr, textStatus) {
                             console.log(xhr);
                             console.log(textStatus);
+                            console.log(xhr.responseText);
 
                             var alertRequired = false;
                             var success = false;
