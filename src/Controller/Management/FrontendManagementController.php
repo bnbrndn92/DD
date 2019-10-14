@@ -14,13 +14,13 @@ class FrontendManagementController extends Controller
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/frontend/{id}", name="management-view-frontend", requirements={"id"="\d+"})
+     * @Route("/management/frontend/{frontendId}", name="management-view-frontend", requirements={"frontendId"="\d+"})
      *
-     * @param int $id
+     * @param int $frontendId
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function viewFrontend (int $id)
+    public function viewFrontend (int $frontendId): Response
     {
         return $this->render('pages/management/frontend/view.html.twig', [
             "pageTitle" => "Frontend Name",
@@ -36,7 +36,8 @@ class FrontendManagementController extends Controller
      * TODO - Include auth checks
      *
      * @Route("/management/frontend/assign", name="management-assign-frontend")
-     * @Route("/management/client/{clientId}/service/{serviceId}/frontend/assign", name="management-assign-client-frontend", requirements={"clientId"="\d+","serviceId"="\d+"})
+     * @Route("/management/client/{clientId}/frontend/assign", name="management-assign-client-frontend", requirements={"clientId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}/frontend/assign", name="management-assign-client-service-frontend", requirements={"clientId"="\d+","serviceId"="\d+"})
      *
      * @param Request $request
      * @param int|null $clientId
@@ -59,7 +60,7 @@ class FrontendManagementController extends Controller
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/frontend/{id}", name="management-edit-frontend", requirements={"frontendId"="\d+"})
+     * @Route("/management/frontend/{frontendId}", name="management-edit-frontend", requirements={"frontendId"="\d+"})
      *
      * @param Request $request
      * @param int $frontendId

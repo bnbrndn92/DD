@@ -20,21 +20,21 @@ class ClientManagementController extends Controller
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/client/{id}", name="management-view-client", requirements={"id"="\d+"})
+     * @Route("/management/client/{clientId}", name="management-view-client", requirements={"clientId"="\d+"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int $clientId
      *
      * @return Response
      */
-    public function viewClient (Request $request, int $id) : Response
+    public function viewClient (Request $request, int $clientId) : Response
     {
         /** @var ClientRepository $clientRepo */
         $clientRepo = $this->getDoctrine()
             ->getRepository(Client::class);
 
         $client = $clientRepo->findOneBy([
-            "id" => intval($id),
+            "id" => intval($clientId),
         ]);
 
         if (empty($client)) {
@@ -100,21 +100,21 @@ class ClientManagementController extends Controller
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/client/{id}/edit", name="management-edit-client", requirements={"id"="\d+"})
+     * @Route("/management/client/{clientId}/edit", name="management-edit-client", requirements={"clientId"="\d+"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int $clientId
      *
      * @return Response
      */
-    public function editClient (Request $request, int $id) : Response
+    public function editClient (Request $request, int $clientId) : Response
     {
         /** @var ClientRepository $clientRepo */
         $clientRepo = $this->getDoctrine()
             ->getRepository(Client::class);
 
         $client = $clientRepo->findOneBy([
-            "id" => intval($id),
+            "id" => intval($clientId),
         ]);
 
         if (empty($client)) {
@@ -141,21 +141,21 @@ class ClientManagementController extends Controller
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/client/{id}/delete", name="management-delete-client", requirements={"id"="\d+"})
+     * @Route("/management/client/{clientId}/delete", name="management-delete-client", requirements={"clientId"="\d+"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int $clientId
      *
      * @return Response
      */
-    public function deleteClient (Request $request, int $id) : Response
+    public function deleteClient (Request $request, int $clientId) : Response
     {
         /** @var ClientRepository $clientRepo */
         $clientRepo = $this->getDoctrine()
             ->getRepository(Client::class);
 
         $client = $clientRepo->findOneBy([
-            "id" => intval($id),
+            "id" => intval($clientId),
         ]);
 
         if (empty($client)) {
@@ -173,7 +173,7 @@ class ClientManagementController extends Controller
             ->getRepository(Service::class);
 
         $services = $serviceRepo->findBy([
-            "client_id" => intval($id),
+            "client_id" => intval($clientId),
         ]);
 
         /** @var FrontendRepository $frontendRepo */
@@ -181,7 +181,7 @@ class ClientManagementController extends Controller
             ->getRepository(Frontend::class);
 
         $frontends = $frontendRepo->findBy([
-            "client_id" => intval($id),
+            "client_id" => intval($clientId),
         ]);
 
         return $this->render('pages/management/client/delete.html.twig', [

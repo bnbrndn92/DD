@@ -101,11 +101,33 @@ class ServiceManagementController extends Controller
      */
     public function createService (Request $request, int $clientId = null) : Response
     {
+        /** @var ClientRepository $clientRepo */
+        $clientRepo = $this->getDoctrine()
+            ->getRepository(Client::class);
+
+        // Check if a clientId has been passed
+        $client = null;
+        if (!empty($clientId)) {
+            $client = $clientRepo->findOneBy([
+                "id" => intval($clientId),
+            ]);
+
+            if (empty($client)) {
+                $client = null;
+            }
+        }
+
+        $allClients = $clientRepo->findBy([
+            "deleted" => null
+        ]);
+
         return $this->render('pages/management/service/create.html.twig', [
             "pageTitle" => "Service Name",
             "pageDescription" => "Service page",
             "pageKeywords" => "management, service",
-            "bodyClass" => "management-service-page"
+            "bodyClass" => "management-service-page",
+            "client" => $client,
+            "allClients" => $allClients,
         ]);
     }
 
@@ -185,7 +207,7 @@ class ServiceManagementController extends Controller
      *
      * @return Response
      */
-    public function deleteClient (Request $request, int $serviceId, int $clientId = null) : Response
+    public function deleteService (Request $request, int $serviceId, int $clientId = null) : Response
     {
         /** @var ServiceRepository $serviceRepo */
         $serviceRepo = $this->getDoctrine()
@@ -230,6 +252,7 @@ class ServiceManagementController extends Controller
         $frontends = $frontendRepo->findBy([
             "service_id" => intval($service->getId()),
         ]);
+
 
         return $this->render('pages/management/service/delete.html.twig', [
             "pageTitle" => "Delete: " . ucwords($service->getName()),

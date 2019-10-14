@@ -96,14 +96,14 @@ class ClientController extends Controller
      *          Checks the safe name doesn't exist
      * Flushes the update
      *
-     * @Route("/client/{id}/edit", name="client-edit", requirements={"id"="\d+"})
+     * @Route("/client/{clientId}/edit", name="client-edit", requirements={"clientId"="\d+"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int $clientId
      *
      * @return Response
      */
-    public function editClient (Request $request, int $id) : Response
+    public function editClient (Request $request, int $clientId) : Response
     {
         // Check that API access is allowed
         $this->checkApiAccess($request);
@@ -112,7 +112,7 @@ class ClientController extends Controller
         $data = $this->checkApiJson($request);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $client = $entityManager->getRepository(Client::class)->findOneBy(["id" => intval($id)]);
+        $client = $entityManager->getRepository(Client::class)->findOneBy(["id" => intval($clientId)]);
 
         if (empty($client)) {
             return new JsonResponse([
@@ -157,14 +157,14 @@ class ClientController extends Controller
      * Process:
      * TODO
      *
-     * @Route("/client/{id}/delete", name="client-delete", requirements={"id"="\d+"})
+     * @Route("/client/{clientId}/delete", name="client-delete", requirements={"clientId"="\d+"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int $clientId
      *
      * @return Response
      */
-    public function deleteClient (Request $request, int $id) : Response
+    public function deleteClient (Request $request, int $clientId) : Response
     {
         // Check that API access is allowed
         $this->checkApiAccess($request);
@@ -173,7 +173,7 @@ class ClientController extends Controller
         $data = $this->checkApiJson($request);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $client = $entityManager->getRepository(Client::class)->findOneBy(["id" => intval($id), "deleted" => null]);
+        $client = $entityManager->getRepository(Client::class)->findOneBy(["id" => intval($clientId), "deleted" => null]);
 
         if (empty($client)) {
             return new JsonResponse([
@@ -182,10 +182,10 @@ class ClientController extends Controller
             ],404);
         }
 
-        $services = $entityManager->getRepository(Service::class)->findBy(["client_id" => intval($id), "deleted" => null]);
-        $frontends = $entityManager->getRepository(Frontend::class)->findBy(["client_id" => intval($id), "deleted" => null]);
+        $services = $entityManager->getRepository(Service::class)->findBy(["client_id" => intval($clientId), "deleted" => null]);
+        $frontends = $entityManager->getRepository(Frontend::class)->findBy(["client_id" => intval($clientId), "deleted" => null]);
 
-        if (intval($id) !== intval($data['client_delete'])) {
+        if (intval($clientId) !== intval($data['client_delete'])) {
             return new JsonResponse([
                 "success" => false,
                 "message" => "Invalid request",

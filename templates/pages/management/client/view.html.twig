@@ -10,8 +10,10 @@
         <div class="row">
             <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center order-md-2">
                 <h3 class="mb-3 pb-3 border-bottom">Options</h3>
-                <a href="{{ path("management-edit-client", { 'id': client.getId() }) }}" class="d-block mb-3 btn btn-md btn-secondary text-uppercase font-weight-bold">Edit</a>
-                <a href="{{ path("management-delete-client", { 'id': client.getId() }) }}" class="d-block mb-3 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
+                <a href="{{ path("management-edit-client", { 'clientId': client.getId() }) }}" class="d-block mb-3 btn btn-md btn-secondary text-uppercase font-weight-bold">Edit</a>
+                <a href="{{ path("management-delete-client", { 'clientId': client.getId() }) }}" class="d-block mb-5 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
+                <a href="{{ path("management-create-client-service", { 'clientId': client.getId() }) }}" class="d-block mb-3 btn btn-md btn-primary text-uppercase font-weight-bold">Create Service</a>
+                <a href="{{ path("management-assign-client-frontend", { 'clientId': client.getId() }) }}" class="d-block mb-3 btn btn-md btn-primary text-uppercase font-weight-bold">Assign Frontend</a>
             </div>
             <div class="col-12 col-md-8 order-md-1 p-0 pr-md-3">
                 <div class="accordion" id="view-client-accordion">
@@ -72,7 +74,7 @@
                                                 <td>{{ service.getId() }}</td>
                                                 <td>{{ service.getName() }}</td>
                                                 <td>{{ service.getSafeName() }}</td>
-                                                <td><a href="{{ path('management-view-service', { 'id': service.getId() }) }}">View</a></td>
+                                                <td><a href="{{ path('management-view-service', { 'serviceId': service.getId() }) }}">View</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -103,7 +105,7 @@
                                             <tr>
                                                 <td>{{ frontend.getId() }}</td>
                                                 <td>{{ frontend.getName() }}</td>
-                                                <td><a href="{{ path('management-view-frontend', { 'id': frontend.getId() }) }}">View</a></td>
+                                                <td><a href="{{ path('management-view-frontend', { 'frontendId': frontend.getId() }) }}">View</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>

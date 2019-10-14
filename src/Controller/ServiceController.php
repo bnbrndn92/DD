@@ -104,6 +104,7 @@ class ServiceController extends Controller
         return new JsonResponse([
             "success" => true,
             "message" => "Service created.",
+            "location" => "/management/service/" . $service->getId(),
         ],201);
     }
 
@@ -114,14 +115,14 @@ class ServiceController extends Controller
      *
      * TODO - Will need access permission checks
      *
-     * @Route("/services/client/current/{id}", name="services-client-current", requirements={"id"="\d+"})
+     * @Route("/client/{clientId}/services/current/", name="services-client-current", requirements={"clientId"="\d+"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int $clientId
      *
      * @return Response
      */
-    public function getCurrentServicesByClient (Request $request, int $id) : Response
+    public function getCurrentServicesByClient (Request $request, int $clientId) : Response
     {
         // Check that API access is allowed
         $this->checkApiAccess($request);
@@ -131,7 +132,7 @@ class ServiceController extends Controller
             ->getRepository(Service::class);
 
         $services = $serviceRepo->findBy([
-            "client_id" => intval($id),
+            "client_id" => intval($clientId),
             "deleted" => null,
         ]);
 

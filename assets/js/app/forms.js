@@ -37,6 +37,8 @@
                     value = $element.val().trim();
                 } else if (type === "submit") {
                     value = "submit";
+                } else if ($element.is("select")) {
+                    value = $element.val().trim();
                 } else {
                     console.log("Unsupported Input Type:");
                     console.log($element);

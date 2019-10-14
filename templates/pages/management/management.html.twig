@@ -19,7 +19,7 @@
                                         <a href="#" class="text-secondary text-left" data-safe="{{ client.getSafeName() }}" data-id="{{ client.getId() }}">{{ client.getName() }}</a>
                                     </div>
                                     <div class="col-2 pl-0 text-right">
-                                        <a href="{{ path('management-view-client', { 'id': client.getId() }) }}" class="">
+                                        <a href="{{ path('management-view-client', { 'clientId': client.getId() }) }}" class="">
                                             <i class="" style="font-style: normal;">&#9881;</i>
                                         </a>
                                     </div>
