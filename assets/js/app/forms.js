@@ -23,17 +23,23 @@
                 }
 
                 // Split by type
-                // TODO - Include
+                // TODO - Include client side validation
                 if (type === "checkbox") {
                     // Check if this is checked
                     if ($element.is(':checked')) {
-                        value = "checked";
+                        if ($element.attr('value')) {
+                            value = $element.val();
+                        } else {
+                            value = "checked";
+                        }
                     }
                 } else if ((type === "text") || (type === "email") || (type === "date") || (type === "time")) {
                     value = $element.val().trim();
+                } else if (type === "submit") {
+                    value = "submit";
                 } else {
-
-                    console.log("Unsupported Input Type");
+                    console.log("Unsupported Input Type:");
+                    console.log($element);
                 }
 
                 if ((value === undefined) || (value === null) || (value === "")) {
@@ -65,6 +71,7 @@
                     alert("No form action");
                 } else {
                     // Submit the form via Ajax
+                    console.log(details);
                     $.ajax ({
                         url: action,
                         type: method,

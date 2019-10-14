@@ -4,15 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="col mb-4 p-0">
-                <h1 class="pb-4 text-center border-bottom">{% if pageTitle is defined and pageTitle %}{{ pageTitle }}{% else %}Create Name{% endif %}</h1>
+                <h1 class="pb-4 text-center border-bottom">{% if pageTitle is defined and pageTitle %}{{ pageTitle }}{% else %}View Client{% endif %}</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center order-md-2">
                 <h3 class="mb-3 pb-3 border-bottom">Options</h3>
                 <a href="{{ path("management-edit-client", { 'id': client.getId() }) }}" class="d-block mb-3 btn btn-md btn-secondary text-uppercase font-weight-bold">Edit</a>
-                {# TODO - Change delete link #}
-                <a href="{{ path("management-create-client") }}" class="d-block mb-3 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
+                <a href="{{ path("management-delete-client", { 'id': client.getId() }) }}" class="d-block mb-3 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
             </div>
             <div class="col-12 col-md-8 order-md-1 p-0 pr-md-3">
                 <div class="accordion" id="view-client-accordion">

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Frontend;
+use App\Entity\Service;
 use App\Repository\ClientRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,6 +89,12 @@ class ClientController extends Controller
      * editClient()
      *
      * Process:
+     * Checks API access & JSON body content is present
+     * Loads the required client via the repository
+     *      Compares the name for any changes
+     *          Updates the name and generates a safe name
+     *          Checks the safe name doesn't exist
+     * Flushes the update
      *
      * @Route("/client/{id}/edit", name="client-edit", requirements={"id"="\d+"})
      *
@@ -95,7 +103,7 @@ class ClientController extends Controller
      *
      * @return Response
      */
-    public function editClient (Request $request, int $id) :response
+    public function editClient (Request $request, int $id) : Response
     {
         // Check that API access is allowed
         $this->checkApiAccess($request);
@@ -141,5 +149,69 @@ class ClientController extends Controller
             "message" => "Client updated",
             "location" => "/management/client/" . $client->getId()
         ],200);
+    }
+
+    /**
+     * deleteClient()
+     *
+     * Process:
+     *
+     * @Route("/client/{id}/delete", name="client-delete", requirements={"id"="\d+"})
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function deleteClient (Request $request, int $id) : Response
+    {
+        // Check that API access is allowed
+        $this->checkApiAccess($request);
+
+        // Check that POST data has been provided & decode
+        $data = $this->checkApiJson($request);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $client = $entityManager->getRepository(Client::class)->findOneBy(["id" => intval($id), "deleted" => null]);
+
+        if (empty($client)) {
+            return new JsonResponse([
+                "success" => false,
+                "message" => "No client found",
+            ],404);
+        }
+
+        $services = $entityManager->getRepository(Service::class)->findBy(["client_id" => intval($id), "deleted" => null]);
+        $frontends = $entityManager->getRepository(Frontend::class)->findBy(["client_id" => intval($id), "deleted" => null]);
+
+        if (intval($id) !== intval($data['client_delete'])) {
+            return new JsonResponse([
+                "success" => false,
+                "message" => "Invalid request",
+            ],400);
+        }
+
+        # TODO - Implement deletion
+
+//        // Remove any frontends
+//        if (!empty($frontends)) {
+//            foreach ($frontends as $frontend) {
+//                /** @var Frontend $frontend */
+//                $frontend->setDeleted();
+//                var_dump($frontend);
+//            }
+//        }
+//
+////        // Remove any services
+////        if (!empty($services)) {
+////            foreach ($services as $service) {
+////                $service->setDeleted();
+////            }
+////        }
+
+        return new JsonResponse([
+            "success" => false,
+            "message" => "Method not complete",
+        ],500);
     }
 }

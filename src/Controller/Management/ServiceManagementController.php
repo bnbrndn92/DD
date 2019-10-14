@@ -23,6 +23,8 @@ class ServiceManagementController extends Controller
      */
     public function viewService (Request $request, int $id) : Response
     {
+        // Get the
+
         return $this->render('pages/management/service/view.html.twig', [
             "pageTitle" => "Service Name",
             "pageDescription" => "Service page",

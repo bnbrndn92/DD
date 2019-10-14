@@ -1,1 +1,80 @@
-Client - Delete
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col mb-4 p-0">
+                <h1 class="pb-4 text-center border-bottom">{% if pageTitle is defined and pageTitle %}{{ pageTitle }}{% else %}Delete Client{% endif %}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-8 p-0 pr-md-3">
+                <div class="alert alert-danger mb-4 text-center text-md-left" role="alert">
+                    You are about to delete a client. Deleting a client will also remove any associated services and frontends.
+                </div>
+                <h2 class="text-center text-md-left">Client:</h2>
+                <table class="table mb-3 text-center text-md-left">
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="border-top-0">Name</th>
+                        <td class="border-top-0">{% if client.getName() is defined and client.getName() %}{{ client.getName() }}{% else %}<i>Missing</i>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Safe Name</th>
+                        <td>{% if client.getSafeName() is defined and client.getSafeName() %}{{ client.getSafeName() }}{% else %}<i>Missing</i>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Created</th>
+                        <td>{% if client.getCreated() is defined and client.getCreated() %}{{ client.getCreated() }}{% else %}<i>Missing</i>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Updated</th>
+                        <td>{% if client.getUpdated() is defined and client.getUpdated() %}{{ client.getUpdated() }}{% else %}<i>Missing</i>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Deleted</th>
+                        <td>{% if client.getDeleted() is defined and client.getDeleted() %}{{ client.getDeleted() }}{% else %}<i>Null</i>{% endif %}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mb-4 text-center text-md-left">Services:</h3>
+                {% if services is defined and services and services|length > 0 %}
+                    <ul class="list-group mb-4">
+                        {% for service in services %}
+                            <li class="list-group-item text-center text-md-left">{{ service.getName() }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="alert alert-secondary mb-3" role="alert">No associated services</div>
+                {% endif %}
+
+                <h3 class="mb-4 text-center text-md-left">Frontends:</h3>
+                {% if frontends is defined and frontends and frontends|length > 0 %}
+                    <ul class="list-group mb-4">
+                        {% for frontend in frontends %}
+                            <li class="list-group-item text-center text-md-left">{{ frontend.getName() }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="alert alert-secondary mb-3" role="alert">No associated frontends</div>
+                {% endif %}
+            </div>
+            <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center">
+                <h3 class="mb-3 pb-3 border-bottom">Options</h3>
+                <a href="{{ path("management-view-client", { 'id': client.getId() }) }}" class="d-block mb-5 btn btn-md btn-white border border-primary text-primary text-uppercase font-weight-bold">back</a>
+                <form action="{{ path('client-delete', { 'id': client.getId() }) }}" method="delete" id="delete-client-form">
+                    <div class="form-group">
+                        <label for="client_delete" class="b-block w-100 mb-0 btn btn-warning text-uppercase font-weight-bold" style="cursor: pointer;">Delete</label>
+                        <input type="checkbox" class="d-none deletion-checkbox" value="{{ client.getId() }}" name="client_delete" id="client_delete" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client_delete_confirm" class="b-block w-100 mb-0 btn btn-danger text-uppercase font-weight-bold disabled" style="cursor: pointer;">Confirm</label>
+                        <input type="submit" class="d-none" name="client_delete_confirm" id="client_delete_confirm" disabled>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

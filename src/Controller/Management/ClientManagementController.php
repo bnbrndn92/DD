@@ -7,6 +7,8 @@ use App\Entity\Client;
 use App\Entity\Frontend;
 use App\Entity\Service;
 use App\Repository\ClientRepository;
+use App\Repository\FrontendRepository;
+use App\Repository\ServiceRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -148,11 +150,48 @@ class ClientManagementController extends Controller
      */
     public function deleteClient (Request $request, int $id) : Response
     {
+        /** @var ClientRepository $clientRepo */
+        $clientRepo = $this->getDoctrine()
+            ->getRepository(Client::class);
+
+        $client = $clientRepo->findOneBy([
+            "id" => intval($id),
+        ]);
+
+        if (empty($client)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, client, error",
+                "bodyClass" => "error-page",
+                "message" => "No client data found",
+            ]);
+        }
+
+        /** @var ServiceRepository $serviceRepo */
+        $serviceRepo = $this->getDoctrine()
+            ->getRepository(Service::class);
+
+        $services = $serviceRepo->findBy([
+            "client_id" => intval($id),
+        ]);
+
+        /** @var FrontendRepository $frontendRepo */
+        $frontendRepo = $this->getDoctrine()
+            ->getRepository(Frontend::class);
+
+        $frontends = $frontendRepo->findBy([
+            "client_id" => intval($id),
+        ]);
+
         return $this->render('pages/management/client/delete.html.twig', [
-            "pageTitle" => "Edit: ",
-            "pageDescription" => "Edit client page",
+            "pageTitle" => "Delete: " . ucwords($client->getName()),
+            "pageDescription" => "Delete client page",
             "pageKeywords" => "management, client",
-            "bodyClass" => "management-edit-client-page",
+            "bodyClass" => "management-delete-client-page",
+            "client" => $client,
+            "services" => $services,
+            "frontends" => $frontends,
         ]);
     }
 }
