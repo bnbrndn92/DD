@@ -27,3 +27,4 @@ services:
     environment:
       ENVIRONMENT: "dev"
       DATABASE_URL: "mysql://data-dashboard:data-dashboard@db1-cluster-1.cluster-cbydemspsfwq.eu-west-1.rds.amazonaws.com:3306/together-data-dashboard"
+      TRAEFIK_URL: "mysql://bandwidth-user:bandwidth-user@db1-cluster-1.cluster-cbydemspsfwq.eu-west-1.rds.amazonaws.com:3306/traefik"
