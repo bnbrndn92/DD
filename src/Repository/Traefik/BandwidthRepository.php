@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Traefik;
 
-use App\Entity\Traefik\Bandwidth;
+use App\Traefik\Bandwidth;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -17,6 +17,22 @@ class BandwidthRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Bandwidth::class);
+    }
+
+    /**
+     * findUniqueFrontends()
+     *
+     * return array
+     */
+    public function findUniqueFrontends ()
+    {
+        return $this->createQueryBuilder('b')
+            ->select("b.frontend")
+            ->distinct(true)
+            ->orderBy('b.frontend', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     // /**

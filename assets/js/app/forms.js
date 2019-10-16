@@ -39,6 +39,10 @@
                     value = "submit";
                 } else if ($element.is("select")) {
                     value = $element.val().trim();
+
+                    if (value === "NULL") {
+                        value = null;
+                    }
                 } else {
                     console.log("Unsupported Input Type:");
                     console.log($element);

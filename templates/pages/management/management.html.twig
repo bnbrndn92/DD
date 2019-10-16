@@ -40,14 +40,33 @@
             <div class="col-md mb-2 mr-md-0 mb-md-0 p-3 border bg-light" id="management-frontends-list">
                 <h3 class="mb-3 p-0 pb-3 text-center border-bottom">Frontends</h3>
                 <div class="alert alert-light text-center default-alert" role="alert">No frontends. Select a client & service to view</div>
-                <a href="{{ path("management-assign-frontend") }}" class="d-block btn btn-md btn-primary disabled" id="assign-frontend-button">Assign</a>
+                <a href="{{ path("management-assign-frontend") }}" class="d-block btn btn-md btn-primary" id="assign-frontend-button">Assign</a>
             </div>
         </div>
         <div class="row">
             <div class="col mb-2 mb-md-0 p-3 border bg-light text-center" id="management-unassigned-frontends">
                 <h3 class="mb-3 p-0 pb-3 text-center border-bottom">Unassigned Frontends</h3>
                 {# TODO - Include unassigned frontends #}
-                <div class="alert alert-light text-center default-alert" role="alert">No unassigned frontends found</div>
+                {% if unassignedFrontends is defined and unassignedFrontends and unassignedFrontends|length > 0 %}
+                    <ul class="list-group mb-3 rounded-0">
+                    {% for frontend in unassignedFrontends %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-10 text-left">
+                                    <a href="#" class="text-secondary text-left">{{ frontend.frontend }}</a>
+                                </div>
+                                <div class="col-2 pl-0 text-right">
+                                    <a href="{{ path('management-assign-frontend-included', { 'frontend': frontend.encoded }) }}" class="">
+                                        <i class="" style="font-style: normal;">&#9881;</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="alert alert-light text-center default-alert" role="alert">No unassigned frontends found</div>
+                {% endif %}
             </div>
         </div>
     </div>

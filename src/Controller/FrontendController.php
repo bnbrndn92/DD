@@ -12,17 +12,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class FrontendController extends Controller
 {
     /**
-     * createFrontend()
+     * assignFrontend()
      *
      * Process:
      * Checks API access & JSON body content is present
      *
-     * @Route("/frontend/create", name="frontend-create")
+     * @Route("/frontend/assign", name="frontend-assign")
      *
      * @param Request $request
      * @return Response
      */
-    public function createFrontend (Request $request) : Response
+    public function assignFrontend (Request $request) : Response
     {
         // Check that API access is allowed
         $this->checkApiAccess($request);
@@ -76,6 +76,7 @@ class FrontendController extends Controller
         return new JsonResponse([
             "success" => true,
             "message" => "Frontend created.",
+            "location" => $this->generateUrl("management-view-frontend", ["frontendId" => $frontend->getId()])
         ],201);
     }
 }

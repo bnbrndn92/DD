@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Traefik;
+namespace App\Traefik;
 
 use App\Entity\Entity;
 use Doctrine\ORM\Mapping as ORM;
@@ -45,7 +45,7 @@ class DatabaseUser extends Entity
     /**
      * @var int
      *
-     * @ORM\Column(type="int", name="count")
+     * @ORM\Column(type="integer", name="count")
      */
 
     private $count;

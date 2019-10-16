@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Traefik;
+namespace App\Traefik;
 
 use App\Entity\Entity;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  *     indexes={@Index(name="id", columns={"id"})}
  * )
  *
- * @package App\Entity\Traefik
+ * @package App\Traefik
  */
 class Bandwidth extends Entity
 {
@@ -43,16 +43,16 @@ class Bandwidth extends Entity
     protected $hostname;
 
     /**
-     * @var string $created
+     * @var string $time
      *
-     * @ORM\Column(type="string", name="created")
+     * @ORM\Column(type="string", name="time")
      */
-    private $created;
+    private $time;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="int", name="count")
+     * @ORM\Column(type="integer", name="count")
      */
 
     private $count;
@@ -118,23 +118,23 @@ class Bandwidth extends Entity
     }
 
     /**
-     * getCreated()
+     * getTime()
      *
      * @return string|null
      */
-    public function getCreated () : ?string
+    public function getTime () : ?string
     {
-        return $this->created;
+        return $this->time;
     }
 
     /**
-     * setCreated()
+     * setTime()
      *
-     * @param string $created
+     * @param string $time
      */
-    public function setCreated (string $created)
+    public function setTime (string $time)
     {
-        $this->created = $created;
+        $this->time = $time;
     }
 
     /**

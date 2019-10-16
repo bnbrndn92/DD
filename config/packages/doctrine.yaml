@@ -41,6 +41,6 @@ doctrine:
                     Traefik:
                         is_bundle: false
                         type: annotation
-                        dir: '%kernel.project_dir%/src/Entity/Traefik'
-                        prefix: 'App\Entity\Traefik'
+                        dir: '%kernel.project_dir%/src/Traefik'
+                        prefix: 'App\Traefik'
                         alias: Traefik

@@ -1,1 +1,71 @@
-Frontend - Assign
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col mb-4 p-0">
+                <h1 class="pb-4 text-center border-bottom">{% if pageTitle is defined and pageTitle %}{{ pageTitle }}{% else %}Assign Frontend{% endif %}</h1>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col col-md-8">
+                <form action="{{ path('frontend-assign') }}" method="post" id="assign-frontend-form" class="text-center">
+                    <div class="form-group text-center text-md-left">
+                        <label for="frontend_name">Frontend</label>
+                        <select class="form-control text-left" name="frontend_name" id="frontend_name">
+                            <option value="NULL">Please select a frontend</option>
+                            {% if frontends is defined and frontends and frontends|length > 0 %}
+                                {% for frontend in frontends %}
+                                    {% if selectedFrontend is defined and selectedFrontend and selectedFrontend == frontend.frontend %}
+                                        <option selected value="{{ frontend.frontend }}">{{ frontend.frontend }}</option>
+                                    {% else %}
+                                        <option value="{{ frontend.frontend }}">{{ frontend.frontend }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <option value="NULL">No Frontends Found</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-group text-center text-md-left">
+                        <label for="client_id">Client</label>
+                        <select class="form-control text-left" name="client_id" id="client_id">
+                            <option value="NULL">Please select a client</option>
+                            {% if clients is defined and clients %}
+                                {% for client in clients %}
+                                    {% if selectedClient is defined and selectedClient and selectedClient == client.getId() %}
+                                        <option selected value="{{ client.getId() }}">{{ client.getName() }}</option>
+                                    {% else %}
+                                        <option value="{{ client.getId() }}">{{ client.getName() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <option value="NULL">No Clients Found</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-group text-center text-md-left">
+                        <label for="service_id">Service</label>
+                        {% if services is defined and services and services|length > 0 %}
+                            <select class="form-control text-left" name="service_id" id="service_id" required>
+                                <option value="NULL">Please select a service</option>
+                                {% for service in services %}
+                                    {% if selectedService is defined and selectedService and selectedService == service.getId() %}
+                                        <option selected value="{{ service.getId() }}">{{ service.getName() }}</option>
+                                    {% else %}
+                                        <option value="{{ service.getId() }}">{{ service.getName() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <select class="form-control text-left" name="service_id" id="service_id" required disabled>
+                                <option value="NULL">Please select a client</option>
+                            </select>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-md btn-primary font-weight-bold text-uppercase font-weight-bold">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
