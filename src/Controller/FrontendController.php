@@ -8,9 +8,63 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class FrontendController extends Controller
 {
+    /**
+     * getCurrentFrontendsByService()
+     *
+     * Attempts to get all current active frontends by the client id
+     *
+     * TODO - Will need access permission checks
+     *
+     * @Route("/serviceId/{serviceId}/frontends/current/", name="service-frontends-current", requirements={"serviceId"="\d+"})
+     * @Route("/client/{clientId}/service/{serviceId}/frontends/current/", name="client-service-frontends-current", requirements={"clientId"="\d+", "serviceId"="\d+"})
+     *
+     * @param Request $request
+     * @param int $serviceId
+     * @param int $clientId
+     *
+     * @return Response
+     */
+    public function getCurrentFrontendsByService (Request $request, int $serviceId, int $clientId = null) : Response
+    {
+        // Check that API access is allowed
+        $this->checkApiAccess($request);
+
+        /** @var FrontendRepository $frontendRepo */
+        $frontendRepo = $this->getDoctrine()
+            ->getRepository(Frontend::class);
+
+        $frontends = $frontendRepo->findBy([
+            "service_id" => intval($serviceId),
+            "deleted" => null,
+        ]);
+
+        if (empty($frontends)) {
+            return new JsonResponse([
+                "success" => true,
+                "message" => "No frontends available",
+                "data" => array()
+            ],204);
+        }
+
+        $normalizers = [new ObjectNormalizer()];
+        $encoders = [new JsonEncoder()];
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $data = $serializer->serialize($frontends, 'json');
+
+        return new JsonResponse([
+            "success" => true,
+            "message" => "Frontends found",
+            "data" => json_decode($data),
+        ],200);
+    }
+
     /**
      * assignFrontend()
      *
