@@ -156,18 +156,82 @@ class FrontendManagementController extends Controller
      * TODO - Include auth checks
      *
      * @Route("/management/frontend/{frontendId}", name="management-view-frontend", requirements={"frontendId"="\d+"})
+     * @Route("/management/client/{clientId}/frontend/{frontendId}", name="management-view-client-frontend", requirements={"frontendId"="\d+","clientId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}/frontend/{frontendId}", name="management-view-client-service-frontend", requirements={"frontendId"="\d+", "clientId"="\d+", "serviceId"="\d+"})
      *
      * @param int $frontendId
+     * @param int $clientId
+     * @param int $serviceId
      *
      * @return Response
      */
-    public function viewFrontend (int $frontendId): Response
+    public function viewFrontend (int $frontendId, int $clientId = null, int $serviceId = null): Response
     {
+        /** @var FrontendRepository $frontendRepo */
+        $frontendRepo = $this->getDoctrine()
+            ->getRepository(Frontend::class);
+
+        $frontend = $frontendRepo->findOneBy([
+            "id" => intval($frontendId),
+            "deleted" => null,
+        ]);
+
+        if (empty($frontend)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, frontend, error",
+                "bodyClass" => "error-page",
+                "message" => "No assigned frontend found",
+            ]);
+        }
+
+        /** @var ServiceRepository $serviceRepo */
+        $serviceRepo = $this->getDoctrine()
+            ->getRepository(Service::class);
+
+        $service = $serviceRepo->findOneBy([
+            "id" => intval($frontend->getServiceId()),
+            "deleted" => null,
+        ]);
+
+        if (empty($service)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, frontend, error",
+                "bodyClass" => "error-page",
+                "message" => "No service found",
+            ]);
+        }
+
+        /** @var ClientRepository $clientRepo */
+        $clientRepo = $this->getDoctrine()
+            ->getRepository(Client::class);
+
+        $client = $clientRepo->findOneBy([
+            "id" => intval($frontend->getClientId()),
+            "deleted" => null
+        ]);
+
+        if (empty($client)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, frontend, error",
+                "bodyClass" => "error-page",
+                "message" => "No client found",
+            ]);
+        }
+
         return $this->render('pages/management/frontend/view.html.twig', [
-            "pageTitle" => "Frontend Name",
+            "pageTitle" => $frontend->getName(),
             "pageDescription" => "frontend page",
             "pageKeywords" => "management, frontend",
             "bodyClass" => "management-frontend-page",
+            "client" => $client,
+            "service" => $service,
+            "frontend" => $frontend,
         ]);
     }
 

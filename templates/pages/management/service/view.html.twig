@@ -111,7 +111,7 @@
                                             <tr>
                                                 <td>{{ frontend.getId() }}</td>
                                                 <td>{{ frontend.getName() }}</td>
-                                                <td><a href="{{ path('management-view-frontend', { 'id': frontend.getId() }) }}">View</a></td>
+                                                <td><a href="{{ path('management-view-frontend', { 'frontendId': frontend.getId() }) }}">View</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
