@@ -11,7 +11,7 @@
             <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center order-md-2">
                 <h3 class="mb-3 pb-3 border-bottom">Options</h3>
                 <a href="{{ path("management-edit-frontend", { 'frontendId': frontend.getId() }) }}" class="d-block mb-3 btn btn-md btn-secondary text-uppercase font-weight-bold">Edit</a>
-                <a href="{{ path("management-delete-frontend", { 'frontendId': frontend.getId() }) }}" class="d-block mb-5 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
+                <a href="{{ path("management-unassign-frontend", { 'frontendId': frontend.getId() }) }}" class="d-block mb-5 btn btn-md btn-warning text-uppercase font-weight-bold">Un-Assign</a>
                 <a href="{{ path("management-view-client", { 'clientId': frontend.getClientId() }) }}" class="d-block mb-3 btn btn-md btn-primary text-uppercase font-weight-bold">View Client</a>
                 <a href="{{ path("management-view-service", { 'serviceId': frontend.getServiceId() }) }}" class="d-block mb-3 btn btn-md btn-primary text-uppercase font-weight-bold">View Service</a>
             </div>

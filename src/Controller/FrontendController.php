@@ -68,6 +68,8 @@ class FrontendController extends Controller
     /**
      * assignFrontend()
      *
+     * TODO - Add authorization
+     *
      * Process:
      * Checks API access & JSON body content is present
      *
@@ -132,5 +134,24 @@ class FrontendController extends Controller
             "message" => "Frontend created.",
             "location" => $this->generateUrl("management-view-frontend", ["frontendId" => $frontend->getId()])
         ],201);
+    }
+
+    /**
+     * editFrontend()
+     *
+     * Process:
+     *
+     * @Route("/frontend/edit", name="frontend-edit")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function editFrontend (Request $request) : Response
+    {
+        return new JsonResponse([
+            "success" => false,
+            "message" => "Method incomplete"
+        ],500);
     }
 }

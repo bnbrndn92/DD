@@ -1,1 +1,64 @@
-Frontend - Edit
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col mb-4 p-0">
+                <h1 class="pb-4 text-center border-bottom">{% if pageTitle is defined and pageTitle %}{{ pageTitle }}{% else %}Edit Frontend{% endif %}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-8 p-0 pr-md-3">
+                <form action="{{ path("frontend-edit", { 'frontendId': frontend.getId() }) }}" method="patch" id="edit-frontend-form" class="text-center">
+                    <table class="table text-center text-md-left">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="border-top-0">Field</th>
+                                <th scope="col" class="border-top-0">Original</th>
+                                <th scope="col" class="border-top-0">New</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">Name</th>
+                            <td>{{ frontend.getName() }}</td>
+                            <td class="font-italic text-muted">Fixed</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Client</th>
+                            <td>{{ client.getName() }}</td>
+                            <td>
+                                <select class="form-control" name="client_id" id="client_id">
+                                    <option value="NULL">Please select a frontend</option>
+                                    {% if clients is defined and clients %}
+                                        {% for singleClient in clients %}
+                                            {% if client.getId() is defined and client.getId() and client.getId() == singleClient.getId() %}
+                                                <option selected value="{{ singleClient.getId() }}">{{ singleClient.getName() }}</option>
+                                            {% else %}
+                                                <option value="{{ singleClient.getId() }}">{{ singleClient.getName() }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="NULL">No Clients Found</option>
+                                    {% endif %}
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Service</th>
+                            <td>{{ service.getName() }}</td>
+                            <td class="font-italic text-muted">Fixed</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="mb-3 btn btn-md btn-primary font-weight-bold text-uppercase font-weight-bold">Update</button>
+                </form>
+            </div>
+            <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center">
+                <h3 class="mb-3 pb-3 border-bottom">Options</h3>
+                <a href="{{ path("management-view-frontend", { 'frontendId': frontend.getId() }) }}" class="d-block mb-3 btn btn-md btn-white border border-primary text-primary text-uppercase font-weight-bold">back</a>
+                <a href="{{ path("management-unassign-frontend", { 'frontendId': frontend.getId() }) }}" class="d-block mb-3 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

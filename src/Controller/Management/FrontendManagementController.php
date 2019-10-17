@@ -240,42 +240,117 @@ class FrontendManagementController extends Controller
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/frontend/{frontendId}", name="management-edit-frontend", requirements={"frontendId"="\d+"})
+     * @Route("/management/frontend/{frontendId}/edit", name="management-edit-frontend", requirements={"frontendId"="\d+"})
      *
      * @param Request $request
      * @param int $frontendId
      *
      * @return Response
      */
-    public function editService (Request $request, int $frontendId) : Response
+    public function editfrontend (Request $request, int $frontendId) : Response
     {
+        /** @var FrontendRepository $frontendRepo */
+        $frontendRepo = $this->getDoctrine()
+            ->getRepository(Frontend::class);
+
+        $frontend = $frontendRepo->findOneBy([
+            "id" => intval($frontendId),
+            "deleted" => null,
+        ]);
+
+        if (empty($frontend)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, frontend, error",
+                "bodyClass" => "error-page",
+                "message" => "No assigned frontend found",
+            ]);
+        }
+
+        /** @var ClientRepository $clientRepo */
+        $clientRepo = $this->getDoctrine()
+            ->getRepository(Client::class);
+
+        $clients = $clientRepo->findBy([
+            "deleted" => null,
+        ]);
+
+        if (empty($clients)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, frontend, error",
+                "bodyClass" => "error-page",
+                "message" => "No clients found",
+            ]);
+        }
+
+        $client = $clientRepo->findOneBy([
+            "id" => $frontend->getClientId(),
+            "deleted" => null,
+        ]);
+
+        if (empty($client)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, frontend, error",
+                "bodyClass" => "error-page",
+                "message" => "No client found",
+            ]);
+        }
+
+        /** @var ServiceRepository $serviceRepo */
+        $serviceRepo = $this->getDoctrine()
+            ->getRepository(Client::class);
+
+        $service = $serviceRepo->findOneBy([
+            "id" => $frontend->getServiceId(),
+            "deleted" => null,
+        ]);
+
+        if (empty($service)) {
+            return $this->render('pages/error.html.twig', [
+                "pageTitle" => "Error",
+                "pageDescription" => "Error page",
+                "pageKeywords" => "management, frontend, error",
+                "bodyClass" => "error-page",
+                "message" => "No service found",
+            ]);
+        }
+
         return $this->render('pages/management/frontend/edit.html.twig', [
             "pageTitle" => "Frontend name",
             "pageDescription" => "Edit frontend page",
             "pageKeywords" => "management, frontend",
             "bodyClass" => "management-edit-frontend-page",
+            "frontend" => $frontend,
+            "client" => $client,
+            "clients" => $clients,
+            "service" => $service,
         ]);
     }
 
     /**
-     * deleteFrontend()
+     * unassignFrontend()
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/frontend/{frontendId}/delete", name="management-delete-frontend", requirements={"frontendId"="\d+"})
+     * @Route("/management/frontend/{frontendId}/unassign", name="management-unassign-frontend", requirements={"frontendId"="\d+"})
      *
      * @param Request $request
      * @param int $frontendId
      *
      * @return Response
      */
-    public function deleteClient (Request $request, int $frontendId) : Response
+    public function unassignFrontend (Request $request, int $frontendId) : Response
     {
-        return $this->render('pages/management/frontend/delete.html.twig', [
+        return $this->render('pages/management/frontend/unassign.html.twig', [
             "pageTitle" => "Delete Frontend",
             "pageDescription" => "Delete frontend page",
             "pageKeywords" => "management, frontend",
-            "bodyClass" => "management-delete-frontend-page",
+            "bodyClass" => "management-unassign-frontend-page",
         ]);
     }
 }
