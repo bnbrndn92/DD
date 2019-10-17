@@ -31,7 +31,7 @@
             {#</li>#}
             {# TODO - Viewable only by Together users #}
             <li class="nav-item dropdown text-center">
-                <a class="nav-link dropdown-toggle font-weight-bold text-uppercase {% if app.request.attributes.get('_route') == "management-home" %}text-primary{% else %}text-light{% endif %}" href="{{ path('management-home') }}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Management</a>
+                <a class="nav-link dropdown-toggle font-weight-bold text-uppercase {% if app.request.attributes.get('_route') == "management-index" %}text-primary{% else %}text-light{% endif %}" href="{{ path('management-index') }}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Management</a>
                 <div class="dropdown-menu bg-dark border-0 rounded-0 pt-0 pb-0" aria-labelledby="dropdown01">
                     <a class="dropdown-item text-uppercase text-center text-light" href="#">Clients</a>
                     <a class="dropdown-item text-uppercase text-center text-light" href="#">Services</a>

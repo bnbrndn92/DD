@@ -16,12 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class ServiceManagementController extends Controller
 {
     /**
-     * viewService()
+     * ServiceManagementController::viewService
      *
      * TOdO - Include auth checks
      *
-     * @Route("/management/service/{serviceId}", name="management-view-service", requirements={"serviceId"="\d+"})
-     * @Route("/management/client/{clientId}/service/{serviceId}", name="management-view-client-service", requirements={"clientId"="\d+","serviceId"="\d+"})
+     * @Route("/management/service/{serviceId}", name="management-service-view", requirements={"serviceId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}", name="management-client-service-view", requirements={"clientId"="\d+","serviceId"="\d+"})
      *
      * @param Request $request
      * @param int $serviceId
@@ -87,12 +87,12 @@ class ServiceManagementController extends Controller
     }
 
     /**
-     * createService()
+     * ServiceManagementController::createService
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/service/create", name="management-create-service")
-     * @Route("/management/client/{clientId}/service/create", name="management-create-client-service", requirements={"clientId"="\d+"})
+     * @Route("/management/service/create", name="management-service-create")
+     * @Route("/management/client/{clientId}/service/create", name="management-client-service-create", requirements={"clientId"="\d+"})
      *
      * @param Request $request
      * @param int|null $clientId
@@ -130,12 +130,12 @@ class ServiceManagementController extends Controller
     }
 
     /**
-     * editService()
+     * ServiceManagementController::editService
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/service/{serviceId}/edit", name="management-edit-service", requirements={"serviceId"="\d+"})
-     * @Route("/management/client/{clientId}/service/{serviceId}/edit", name="management-edit-client-service", requirements={"serviceId"="\d+","clientId"="\d+"})
+     * @Route("/management/service/{serviceId}/edit", name="management-service-edit", requirements={"serviceId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}/edit", name="management-client-service-edit", requirements={"serviceId"="\d+","clientId"="\d+"})
      *
      * @param Request $request
      * @param int $serviceId
@@ -192,12 +192,12 @@ class ServiceManagementController extends Controller
     }
 
     /**
-     * deleteService()
+     * ServiceManagementController::deleteService
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/service/{serviceId}/delete", name="management-delete-service", requirements={"serviceId"="\d+"})
-     * @Route("/management/client/{clientId}/service/{serviceId}/delete", name="management-delete-client-service", requirements={"serviceId"="\d+", "clientId"="\d+"})
+     * @Route("/management/service/{serviceId}/delete", name="management-service-delete", requirements={"serviceId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}/delete", name="management-client-service-delete", requirements={"serviceId"="\d+", "clientId"="\d+"})
      *
      * @param Request $request
      * @param int $serviceId

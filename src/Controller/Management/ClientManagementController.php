@@ -16,11 +16,11 @@ use Symfony\Component\HttpFoundation\Request;
 class ClientManagementController extends Controller
 {
     /**
-     * viewClient()
+     * ClientManagementController::viewClient
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/client/{clientId}", name="management-view-client", requirements={"clientId"="\d+"})
+     * @Route("/management/client/{clientId}", name="management-client-view", requirements={"clientId"="\d+"})
      *
      * @param Request $request
      * @param int $clientId
@@ -75,11 +75,11 @@ class ClientManagementController extends Controller
     }
 
     /**
-     * createClient()
+     * ClientManagementController::createClient
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/client/create", name="management-create-client")
+     * @Route("/management/client/create", name="management-client-create")
      *
      * @param Request $request
      *
@@ -96,11 +96,11 @@ class ClientManagementController extends Controller
     }
 
     /**
-     * editClient()
+     * ClientManagementController::editClient
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/client/{clientId}/edit", name="management-edit-client", requirements={"clientId"="\d+"})
+     * @Route("/management/client/{clientId}/edit", name="management-client-edit", requirements={"clientId"="\d+"})
      *
      * @param Request $request
      * @param int $clientId
@@ -137,11 +137,11 @@ class ClientManagementController extends Controller
     }
 
     /**
-     * deleteClient()
+     * ClientManagementController::deleteClient
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/client/{clientId}/delete", name="management-delete-client", requirements={"clientId"="\d+"})
+     * @Route("/management/client/{clientId}/delete", name="management-client-delete", requirements={"clientId"="\d+"})
      *
      * @param Request $request
      * @param int $clientId

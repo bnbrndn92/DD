@@ -31,7 +31,6 @@ class ServiceRepository extends ServiceEntityRepository
         if ($activeOnly) {
             return $this->createQueryBuilder('s')
                 ->andWhere('s.safe_name = :val')
-                ->andWhere('s.deleted IS NULL')
                 ->setParameter('val', $value)
                 ->orderBy('s.id', 'ASC')
                 ->setMaxResults(1)

@@ -62,8 +62,8 @@
             </div>
             <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center">
                 <h3 class="mb-3 pb-3 border-bottom">Options</h3>
-                <a href="{{ path("management-view-client", { 'clientId': client.getId() }) }}" class="d-block mb-5 btn btn-md btn-white border border-primary text-primary text-uppercase font-weight-bold">back</a>
-                <form action="{{ path('client-delete', { 'clientId': client.getId() }) }}" method="delete" id="delete-client-form">
+                <a href="{{ path("management-client-view", { 'clientId': client.getId() }) }}" class="d-block mb-5 btn btn-md btn-white border border-primary text-primary text-uppercase font-weight-bold">back</a>
+                <form action="{{ path('api-client-delete', { 'clientId': client.getId() }) }}" method="delete" id="delete-client-form">
                     <div class="form-group">
                         <label for="client_delete" class="b-block w-100 mb-0 btn btn-warning text-uppercase font-weight-bold" style="cursor: pointer;">Delete</label>
                         <input type="checkbox" class="d-none deletion-checkbox" value="{{ client.getId() }}" name="client_delete" id="client_delete" required>

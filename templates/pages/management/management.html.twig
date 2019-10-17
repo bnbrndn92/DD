@@ -19,7 +19,7 @@
                                         <a href="#" class="text-secondary text-left" data-safe="{{ client.getSafeName() }}" data-id="{{ client.getId() }}">{{ client.getName() }}</a>
                                     </div>
                                     <div class="col-2 pl-0 text-right">
-                                        <a href="{{ path('management-view-client', { 'clientId': client.getId() }) }}" class="">
+                                        <a href="{{ path('management-client-view', { 'clientId': client.getId() }) }}" class="">
                                             <i class="" style="font-style: normal;">&#9881;</i>
                                         </a>
                                     </div>
@@ -30,17 +30,17 @@
                 {% else %}
                     <div class="alert alert-light text-center default-alert" role="alert">No clients found</div>
                 {% endif %}
-                <a href="{{ path("management-create-client") }}" class="d-block btn btn-md btn-primary" id="create-client-button">+</a>
+                <a href="{{ path("management-client-create") }}" class="d-block btn btn-md btn-primary" id="create-client-button">+</a>
             </div>
             <div class="col-md mb-2 mr-md-1 mb-md-0 p-3 border bg-light" id="management-services-list">
                 <h3 class="mb-3 p-0 pb-3 text-center border-bottom">Services</h3>
                 <div class="alert alert-light text-center default-alert" role="alert">No services. Select a client to view</div>
-                <a href="{{ path("management-create-service") }}" class="d-block btn btn-md btn-primary" id="create-service-button">+</a>
+                <a href="{{ path("management-service-create") }}" class="d-block btn btn-md btn-primary" id="create-service-button">+</a>
             </div>
             <div class="col-md mb-2 mr-md-0 mb-md-0 p-3 border bg-light" id="management-frontends-list">
                 <h3 class="mb-3 p-0 pb-3 text-center border-bottom">Frontends</h3>
                 <div class="alert alert-light text-center default-alert" role="alert">No frontends. Select a client & service to view</div>
-                <a href="{{ path("management-assign-frontend") }}" class="d-block btn btn-md btn-primary" id="assign-frontend-button">Assign</a>
+                <a href="{{ path("management-frontend-assign") }}" class="d-block btn btn-md btn-primary" id="assign-frontend-button">Assign</a>
             </div>
         </div>
         <div class="row">
@@ -56,7 +56,7 @@
                                     <a href="#" class="text-secondary text-left">{{ frontend.frontend }}</a>
                                 </div>
                                 <div class="col-2 pl-0 text-right">
-                                    <a href="{{ path('management-assign-frontend-included', { 'frontend': frontend.encoded }) }}" class="">
+                                    <a href="{{ path('management-frontend-assign-name', { 'frontend': frontend.encoded }) }}" class="">
                                         <i class="" style="font-style: normal;">&#9881;</i>
                                     </a>
                                 </div>

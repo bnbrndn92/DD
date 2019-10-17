@@ -7,17 +7,18 @@ use App\Entity\Client;
 use App\Entity\Frontend;
 use App\Traefik\Bandwidth;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class ManagementController extends Controller
 {
     /**
-     * index()
+     * ManagementController::index
      *
-     * @Route("/management", name="management-home")
+     * @Route("/management", name="management-index")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function index()
+    public function index() : Response
     {
         // Pull a list of all the current clients
         $clients = $this->getDoctrine()

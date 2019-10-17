@@ -9,7 +9,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-8 p-0 pr-md-3">
-                <form action="{{ path("frontend-edit", { 'frontendId': frontend.getId() }) }}" method="patch" id="edit-frontend-form" class="text-center">
+                <form action="{{ path("api-frontend-edit", { 'frontendId': frontend.getId() }) }}" method="patch" id="edit-frontend-form" class="text-center">
                     <table class="table text-center text-md-left">
                         <thead>
                             <tr>
@@ -56,8 +56,8 @@
             </div>
             <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center">
                 <h3 class="mb-3 pb-3 border-bottom">Options</h3>
-                <a href="{{ path("management-view-frontend", { 'frontendId': frontend.getId() }) }}" class="d-block mb-3 btn btn-md btn-white border border-primary text-primary text-uppercase font-weight-bold">back</a>
-                <a href="{{ path("management-unassign-frontend", { 'frontendId': frontend.getId() }) }}" class="d-block mb-3 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
+                <a href="{{ path("management-frontend-view", { 'frontendId': frontend.getId() }) }}" class="d-block mb-3 btn btn-md btn-white border border-primary text-primary text-uppercase font-weight-bold">back</a>
+                <a href="{{ path("management-frontend-unassign", { 'frontendId': frontend.getId() }) }}" class="d-block mb-3 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
             </div>
         </div>
     </div>

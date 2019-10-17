@@ -86,7 +86,7 @@
                  processing = true;
 
                  $.ajax ({
-                     url: "/client/" + id + "/services/current/",
+                     url: "/api/client/" + id + "/services",
                      type: "GET",
                      dataType: "json",
                      contentType: "application/json",
@@ -187,7 +187,7 @@
                 processing = true;
 
                 $.ajax ({
-                    url: "/client/" + clientId + "/service/" + serviceId + "/frontends/current/",
+                    url: "/api/client/" + clientId + "/service/" + serviceId + "/frontends",
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json",

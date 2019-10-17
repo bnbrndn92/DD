@@ -17,16 +17,16 @@ use Symfony\Component\HttpFoundation\Request;
 class FrontendManagementController extends Controller
 {
     /**
-     * assignFrontend()
+     * FrontendManagementController::assignFrontend
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/frontend/assign", name="management-assign-frontend")
-     * @Route("/management/frontend/assign/{frontend}", name="management-assign-frontend-included")
-     * @Route("/management/client/{clientId}/frontend/assign", name="management-assign-client-frontend", requirements={"clientId"="\d+"})
-     * @Route("/management/client/{clientId}/frontend/assign/{frontend}", name="management-assign-client-frontend-included", requirements={"clientId"="\d+"})
-     * @Route("/management/client/{clientId}/service/{serviceId}/frontend/assign", name="management-assign-client-service-frontend", requirements={"clientId"="\d+","serviceId"="\d+"})
-     * @Route("/management/client/{clientId}/service/{serviceId}/frontend/assign/{frontend}", name="management-assign-client-service-frontend-included", requirements={"clientId"="\d+","serviceId"="\d+"})
+     * @Route("/management/frontend/assign", name="management-frontend-assign")
+     * @Route("/management/frontend/assign/{frontend}", name="management-frontend-assign-name")
+     * @Route("/management/client/{clientId}/frontend/assign", name="management-client-frontend-assign", requirements={"clientId"="\d+"})
+     * @Route("/management/client/{clientId}/frontend/assign/{frontend}", name="management-client-frontend-assign-name", requirements={"clientId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}/frontend/assign", name="management-client-service-frontend-assign", requirements={"clientId"="\d+","serviceId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}/frontend/assign/{frontend}", name="management-client-service-frontend-assign-name", requirements={"clientId"="\d+","serviceId"="\d+"})
      *
      * @param Request $request
      * @param int|null $clientId
@@ -112,7 +112,6 @@ class FrontendManagementController extends Controller
         foreach ($frontends as $key => $unassignedFrontend) {
             $assignedFrontend = $frontendRepo->findBy([
                 "name" => $unassignedFrontend,
-                "deleted" => null,
             ]);
 
             if (!empty($assignedFrontend)) {
@@ -145,13 +144,13 @@ class FrontendManagementController extends Controller
     }
 
     /**
-     * viewFrontend()
+     * FrontendManagementController::viewFrontend
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/frontend/{frontendId}", name="management-view-frontend", requirements={"frontendId"="\d+"})
-     * @Route("/management/client/{clientId}/frontend/{frontendId}", name="management-view-client-frontend", requirements={"frontendId"="\d+","clientId"="\d+"})
-     * @Route("/management/client/{clientId}/service/{serviceId}/frontend/{frontendId}", name="management-view-client-service-frontend", requirements={"frontendId"="\d+", "clientId"="\d+", "serviceId"="\d+"})
+     * @Route("/management/frontend/{frontendId}", name="management-frontend-view", requirements={"frontendId"="\d+"})
+     * @Route("/management/client/{clientId}/frontend/{frontendId}", name="management-client-frontend-view", requirements={"frontendId"="\d+","clientId"="\d+"})
+     * @Route("/management/client/{clientId}/service/{serviceId}/frontend/{frontendId}", name="management-client-service-frontend-view", requirements={"frontendId"="\d+", "clientId"="\d+", "serviceId"="\d+"})
      *
      * @param int $frontendId
      * @param int $clientId
@@ -227,11 +226,11 @@ class FrontendManagementController extends Controller
     }
 
     /**
-     * editFrontend()
+     * FrontendManagementController::editFrontend
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/frontend/{frontendId}/edit", name="management-edit-frontend", requirements={"frontendId"="\d+"})
+     * @Route("/management/frontend/{frontendId}/edit", name="management-frontend-edit", requirements={"frontendId"="\d+"})
      *
      * @param Request $request
      * @param int $frontendId
@@ -319,11 +318,11 @@ class FrontendManagementController extends Controller
     }
 
     /**
-     * unassignFrontend()
+     * FrontendManagementController::unassignFrontend
      *
      * TODO - Include auth checks
      *
-     * @Route("/management/frontend/{frontendId}/unassign", name="management-unassign-frontend", requirements={"frontendId"="\d+"})
+     * @Route("/management/frontend/{frontendId}/unassign", name="management-frontend-unassign", requirements={"frontendId"="\d+"})
      *
      * @param Request $request
      * @param int $frontendId

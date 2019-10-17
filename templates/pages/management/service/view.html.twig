@@ -10,10 +10,10 @@
         <div class="row">
             <div class="col-12 col-md-4 mb-3 mb-md-0 p-3 border bg-light rounded text-center order-md-2">
                 <h3 class="mb-3 pb-3 border-bottom">Options</h3>
-                <a href="{{ path("management-edit-service", { 'serviceId': service.getId() }) }}" class="d-block mb-3 btn btn-md btn-secondary text-uppercase font-weight-bold">Edit</a>
-                <a href="{{ path("management-delete-service", { 'serviceId': service.getId() }) }}" class="d-block mb-5 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
-                <a href="{{ path("management-view-client", { 'clientId': service.getClientId() }) }}" class="d-block mb-3 btn btn-md btn-primary text-uppercase font-weight-bold">View Client</a>
-                <a href="{{ path("management-assign-client-service-frontend", { 'clientId': service.getClientId(), 'serviceId': service.getId() }) }}" class="d-block mb-3 btn btn-md btn-primary text-uppercase font-weight-bold">Assign Frontend</a>
+                <a href="{{ path("management-service-edit", { 'serviceId': service.getId() }) }}" class="d-block mb-3 btn btn-md btn-secondary text-uppercase font-weight-bold">Edit</a>
+                <a href="{{ path("management-service-delete", { 'serviceId': service.getId() }) }}" class="d-block mb-5 btn btn-md btn-warning text-uppercase font-weight-bold">Delete</a>
+                <a href="{{ path("management-client-view", { 'clientId': service.getClientId() }) }}" class="d-block mb-3 btn btn-md btn-primary text-uppercase font-weight-bold">View Client</a>
+                <a href="{{ path("management-client-service-frontend-assign", { 'clientId': service.getClientId(), 'serviceId': service.getId() }) }}" class="d-block mb-3 btn btn-md btn-primary text-uppercase font-weight-bold">Assign Frontend</a>
             </div>
             <div class="col-12 col-md-8 order-md-1 p-0 pr-md-3">
                 <div class="accordion" id="view-service-accordion">
@@ -111,7 +111,7 @@
                                             <tr>
                                                 <td>{{ frontend.getId() }}</td>
                                                 <td>{{ frontend.getName() }}</td>
-                                                <td><a href="{{ path('management-view-frontend', { 'frontendId': frontend.getId() }) }}">View</a></td>
+                                                <td><a href="{{ path('management-frontend-view', { 'frontendId': frontend.getId() }) }}">View</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>

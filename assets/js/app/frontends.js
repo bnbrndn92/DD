@@ -7,7 +7,7 @@
             if (clientId !== "NULL") {
                 // Load in the clients services
                 $.ajax ({
-                    url: "/client/" + clientId + "/services/current",
+                    url: "/api/client/" + clientId + "/services",
                     type: "GET",
                     dataType: "json",
                     contentType: "application/json",
