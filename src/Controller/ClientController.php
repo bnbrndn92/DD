@@ -173,7 +173,7 @@ class ClientController extends Controller
         $data = $this->checkApiJson($request);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $client = $entityManager->getRepository(Client::class)->findOneBy(["id" => intval($clientId), "deleted" => null]);
+        $client = $entityManager->getRepository(Client::class)->findOneBy(["id" => intval($clientId)]);
 
         if (empty($client)) {
             return new JsonResponse([
@@ -182,8 +182,8 @@ class ClientController extends Controller
             ],404);
         }
 
-        $services = $entityManager->getRepository(Service::class)->findBy(["client_id" => intval($clientId), "deleted" => null]);
-        $frontends = $entityManager->getRepository(Frontend::class)->findBy(["client_id" => intval($clientId), "deleted" => null]);
+        $services = $entityManager->getRepository(Service::class)->findBy(["client_id" => intval($clientId)]);
+        $frontends = $entityManager->getRepository(Frontend::class)->findBy(["client_id" => intval($clientId)]);
 
         if (intval($clientId) !== intval($data['client_delete'])) {
             return new JsonResponse([

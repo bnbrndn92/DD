@@ -117,9 +117,7 @@ class ServiceManagementController extends Controller
             }
         }
 
-        $allClients = $clientRepo->findBy([
-            "deleted" => null
-        ]);
+        $allClients = $clientRepo->findAll();
 
         return $this->render('pages/management/service/create.html.twig', [
             "pageTitle" => "Service Name",

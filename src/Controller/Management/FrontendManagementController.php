@@ -47,7 +47,6 @@ class FrontendManagementController extends Controller
 
             $assignedFrontend = $frontendRepo->findOneBy([
                 "name" => intval($frontend),
-                "deleted" => null,
             ]);
 
             if (!empty($assignedFrontend)) {
@@ -66,9 +65,7 @@ class FrontendManagementController extends Controller
         $clientRepo = $this->getDoctrine()
             ->getRepository(Client::class);
 
-        $clients = $clientRepo->findBy([
-            "deleted" => null,
-        ]);
+        $clients = $clientRepo->findAll();
 
         if (empty($clients)) {
             return $this->render('pages/error.html.twig', [
@@ -91,20 +88,17 @@ class FrontendManagementController extends Controller
             // Attempt to pull in services using the client ID
             $services = $serviceRepo->findBy([
                 "client_id" => intval($clientId),
-                "deleted" => null,
             ]);
         } else if(!empty($serviceId)) {
             // Attempt to pull in services using the service ID
             $singleService = $serviceRepo->findOneBy([
                 "id" => intval($serviceId),
-                "disabled" => null,
             ]);
 
             if (!empty($singleService)) {
                 // Service found load in other services using the client ID
                 $services = $serviceRepo->findBy([
                     "client_id" => intval($singleService->getClientId()),
-                    "deleted" => null,
                 ]);
             }
         }
@@ -173,7 +167,6 @@ class FrontendManagementController extends Controller
 
         $frontend = $frontendRepo->findOneBy([
             "id" => intval($frontendId),
-            "deleted" => null,
         ]);
 
         if (empty($frontend)) {
@@ -192,7 +185,6 @@ class FrontendManagementController extends Controller
 
         $service = $serviceRepo->findOneBy([
             "id" => intval($frontend->getServiceId()),
-            "deleted" => null,
         ]);
 
         if (empty($service)) {
@@ -211,7 +203,6 @@ class FrontendManagementController extends Controller
 
         $client = $clientRepo->findOneBy([
             "id" => intval($frontend->getClientId()),
-            "deleted" => null
         ]);
 
         if (empty($client)) {
@@ -255,7 +246,6 @@ class FrontendManagementController extends Controller
 
         $frontend = $frontendRepo->findOneBy([
             "id" => intval($frontendId),
-            "deleted" => null,
         ]);
 
         if (empty($frontend)) {
@@ -272,9 +262,7 @@ class FrontendManagementController extends Controller
         $clientRepo = $this->getDoctrine()
             ->getRepository(Client::class);
 
-        $clients = $clientRepo->findBy([
-            "deleted" => null,
-        ]);
+        $clients = $clientRepo->findAll();
 
         if (empty($clients)) {
             return $this->render('pages/error.html.twig', [
@@ -288,7 +276,6 @@ class FrontendManagementController extends Controller
 
         $client = $clientRepo->findOneBy([
             "id" => $frontend->getClientId(),
-            "deleted" => null,
         ]);
 
         if (empty($client)) {
@@ -307,7 +294,6 @@ class FrontendManagementController extends Controller
 
         $service = $serviceRepo->findOneBy([
             "id" => $frontend->getServiceId(),
-            "deleted" => null,
         ]);
 
         if (empty($service)) {

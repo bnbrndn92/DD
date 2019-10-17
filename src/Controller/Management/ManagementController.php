@@ -22,9 +22,7 @@ class ManagementController extends Controller
         // Pull a list of all the current clients
         $clients = $this->getDoctrine()
             ->getRepository(Client::class)
-            ->findBy([
-                "deleted" => null
-            ]);
+            ->findAll();
 
         // Pull a list of all distinct frontends from the Traefik DB
         $traefikFrontends = $this->getDoctrine()
@@ -49,7 +47,6 @@ class ManagementController extends Controller
         foreach ($traefikFrontends as $key => $unassignedFrontend) {
             $frontend = $frontendRepo->findBy([
                 "name" => $unassignedFrontend,
-                "deleted" => null,
             ]);
 
             // Encode the frontend

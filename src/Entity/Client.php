@@ -57,13 +57,6 @@ class Client extends Entity
     private $updated;
 
     /**
-     * @var \DateTime $deleted
-     *
-     * @ORM\Column(type="datetime", name="client_deleted", nullable=true)
-     */
-    private $deleted;
-
-    /**
      * @return int
      */
     public function getId (): int
@@ -149,31 +142,6 @@ class Client extends Entity
             // Silence
         }
 
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDeleted (): ?string
-    {
-        if (!empty($this->deleted)) {
-            return $this->deleted->format(parent::DATE_FORMAT);
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * @param string $deleted
-     */
-    public function setDeleted (string $deleted = "now"): void
-    {
-        try {
-            $this->deleted = new \DateTime($deleted);
-            $this->setUpdated();
-        } catch (\Exception $e) {
-            // Silence
-        }
     }
 
     /**

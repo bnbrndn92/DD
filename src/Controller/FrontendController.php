@@ -41,7 +41,6 @@ class FrontendController extends Controller
 
         $frontends = $frontendRepo->findBy([
             "service_id" => intval($serviceId),
-            "deleted" => null,
         ]);
 
         if (empty($frontends)) {
